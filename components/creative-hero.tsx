@@ -61,9 +61,15 @@ export function CreativeHero() {
         this.density = Math.random() * 30 + 1
         this.distance = 0
 
-        // Create a gradient from purple to pink
-        const hue = Math.random() * 60 + 270 // 270-330 range for purples and pinks
-        this.color = `hsl(${hue}, 70%, 60%)`
+        // Create a gradient from blue to teal with amber accents
+        const colorOptions = [
+          `hsl(214, 100%, 60%)`, // Blue
+          `hsl(178, 84%, 50%)`, // Teal
+          `hsl(43, 96%, 56%)`, // Amber
+          `hsl(214, 100%, 70%)`, // Light Blue
+          `hsl(178, 84%, 60%)`, // Light Teal
+        ]
+        this.color = colorOptions[Math.floor(Math.random() * colorOptions.length)]
       }
 
       update() {
@@ -151,7 +157,7 @@ export function CreativeHero() {
 
           if (distance < 30) {
             ctx.beginPath()
-            ctx.strokeStyle = `rgba(180, 120, 255, ${0.2 - distance / 150})`
+            ctx.strokeStyle = `rgba(59, 130, 246, ${0.2 - distance / 150})` // Blue connections
             ctx.lineWidth = 0.5
             ctx.moveTo(particlesArray[i].x, particlesArray[i].y)
             ctx.lineTo(particlesArray[j].x, particlesArray[j].y)

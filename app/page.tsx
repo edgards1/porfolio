@@ -23,9 +23,9 @@ export default function Portfolio() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-amber-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-teal-professional-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
         </div>
 
         <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -33,34 +33,35 @@ export default function Portfolio() {
             <div className="inline-block">
               <div className="relative px-3 py-1 text-sm font-medium rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4">
                 <span className="relative z-10">Software Engineer & Creative Developer</span>
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 animate-pulse"></span>
+                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-deep-500/20 to-teal-professional-500/20 animate-pulse"></span>
               </div>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               <span className="block">Hi, I'm</span>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                Shine Kyaw Kyaw Aung
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-deep-400 to-teal-professional-500">
+                Edgar Eduardo Delgado Scott
               </span>
             </h1>
             <p className="text-xl text-zinc-400 max-w-[600px]">
-              I craft exceptional digital experiences with code, creativity, and a passion for innovation.
+              Desarrollador FullStack con sólida formación técnica y una profunda vocación por la innovación
+              tecnológica. Me especializo en la arquitectura y desarrollo de soluciones integrales.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button className="relative overflow-hidden group bg-gradient-to-r from-purple-500 to-pink-500 border-0">
+              <Button className="relative overflow-hidden group bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 border-0">
                 <span className="relative z-10 flex items-center">
                   View Projects <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="absolute inset-0 bg-gradient-to-r from-teal-professional-600 to-blue-deep-600 opacity-0 group-hover:opacity-100 transition-opacity"></span>
               </Button>
               <Button
                 variant="outline"
-                className="border-zinc-700 text-zinc-300 hover:text-white hover:border-zinc-500"
+                className="border-zinc-700 text-zinc-300 hover:text-white hover:border-zinc-500 bg-transparent"
               >
                 Contact Me
               </Button>
             </div>
             <div className="flex gap-4 pt-4">
-              <Link href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <Link href="https://github.com/edgards1" target="_blank" rel="noopener noreferrer">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -70,7 +71,7 @@ export default function Portfolio() {
                   <span className="sr-only">GitHub</span>
                 </Button>
               </Link>
-              <Link href="https://www.linkedin.com/in/shinekyawkyawaung/" target="_blank" rel="noopener noreferrer">
+              <Link href="https://www.linkedin.com/in/edgar-delgado-scott" target="_blank" rel="noopener noreferrer">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -90,7 +91,7 @@ export default function Portfolio() {
                   <span className="sr-only">Twitter</span>
                 </Button>
               </Link>
-              <Link href="mailto:hello@example.com">
+              <Link href="mailto:edgar_delgado_scott@hotmail.com">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -117,8 +118,8 @@ export default function Portfolio() {
       {/* About Section */}
       <section id="about" className="py-32 relative">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/3 left-1/3 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute bottom-1/3 left-1/3 w-64 h-64 bg-teal-professional-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
         </div>
 
         <div className="container relative z-10">
@@ -126,11 +127,11 @@ export default function Portfolio() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-16">
             <div className="relative">
-              <div className="absolute -inset-4 rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-xl opacity-70"></div>
+              <div className="absolute -inset-4 rounded-xl bg-gradient-to-r from-blue-deep-500/20 to-teal-professional-500/20 blur-xl opacity-70"></div>
               <div className="relative aspect-square rounded-xl overflow-hidden border border-zinc-800">
                 <img
-                  src="/placeholder.svg?height=600&width=600"
-                  alt="Shine Kyaw Kyaw Aung"
+                  src="/img/perfil.jpg"
+                  alt="Edgar Delgado Scott"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -146,35 +147,36 @@ export default function Portfolio() {
             <div className="space-y-6">
               <GlassmorphicCard>
                 <p className="text-lg text-zinc-300">
-                  I'm a passionate software engineer with experience building web applications and digital products. I
-                  specialize in frontend development with React and Next.js, but I'm also comfortable working with
-                  backend technologies.
+                  Soy un Desarrollador FullStack con sólida formación técnica y una profunda vocación por la innovación
+                  tecnológica. Me especializo en la arquitectura y desarrollo de soluciones integrales, dominando tanto
+                  el ecosistema Frontend como Backend.
                 </p>
                 <p className="text-lg text-zinc-300 mt-4">
-                  My journey in tech started with a strong foundation in software development. I've worked with various
-                  companies to create intuitive, performant, and accessible digital experiences.
+                  Mi enfoque se basa en comprender a fondo la lógica y el flujo entre capas, aplicando buenas prácticas,
+                  patrones de diseño y metodologías ágiles, con el propósito de crear productos escalables, eficientes y
+                  orientados a la experiencia del usuario.
                 </p>
                 <p className="text-lg text-zinc-300 mt-4">
-                  When I'm not coding, you can find me exploring new technologies, contributing to open-source projects,
-                  and staying up-to-date with the latest industry trends.
+                  Tengo experiencia trabajando con tecnologías como React, Angular, Django, .NET, y bases de datos SQL
+                  Server y MySQL. Me apasiona crear interfaces intuitivas y sistemas robustos.
                 </p>
 
                 <div className="grid grid-cols-2 gap-4 mt-8">
                   <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Name</div>
-                    <div className="font-medium">Shine Kyaw Kyaw Aung</div>
+                    <div className="text-sm text-zinc-500">Nombre</div>
+                    <div className="font-medium">Edgar Eduardo Delgado Scott</div>
                   </div>
                   <div className="space-y-1">
                     <div className="text-sm text-zinc-500">Email</div>
-                    <div className="font-medium">hello@example.com</div>
+                    <div className="font-medium">edgar_delgado_scott@hotmail.com</div>
                   </div>
                   <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Location</div>
-                    <div className="font-medium">Myanmar</div>
+                    <div className="text-sm text-zinc-500">Ubicación</div>
+                    <div className="font-medium">Guayaquil, Ecuador</div>
                   </div>
                   <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Availability</div>
-                    <div className="font-medium text-green-500">Open to opportunities</div>
+                    <div className="text-sm text-zinc-500">Teléfono</div>
+                    <div className="font-medium">0995658194</div>
                   </div>
                 </div>
 
@@ -190,8 +192,8 @@ export default function Portfolio() {
       {/* Skills Section */}
       <section id="skills" className="py-32 relative">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-blue-deep-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
         </div>
 
         <div className="container relative z-10">
@@ -200,16 +202,22 @@ export default function Portfolio() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-16">
             <SkillBadge name="JavaScript" level={90} />
             <SkillBadge name="TypeScript" level={85} />
-            <SkillBadge name="React" level={95} />
-            <SkillBadge name="Next.js" level={90} />
-            <SkillBadge name="Node.js" level={80} />
-            <SkillBadge name="HTML/CSS" level={95} />
+            <SkillBadge name="React" level={90} />
+            <SkillBadge name="Angular" level={85} />
+            <SkillBadge name="HTML5" level={95} />
+            <SkillBadge name="CSS3" level={90} />
+            <SkillBadge name="Bootstrap" level={85} />
             <SkillBadge name="Tailwind CSS" level={90} />
-            <SkillBadge name="GraphQL" level={75} />
-            <SkillBadge name="PostgreSQL" level={70} />
-            <SkillBadge name="AWS" level={65} />
-            <SkillBadge name="Docker" level={60} />
-            <SkillBadge name="Git" level={85} />
+            <SkillBadge name="C#" level={80} />
+            <SkillBadge name="Python" level={85} />
+            <SkillBadge name=".NET" level={80} />
+            <SkillBadge name="Django" level={85} />
+            <SkillBadge name="Flask" level={75} />
+            <SkillBadge name="Express" level={75} />
+            <SkillBadge name="SQL Server" level={85} />
+            <SkillBadge name="MySQL" level={80} />
+            <SkillBadge name="Docker" level={70} />
+            <SkillBadge name="Git" level={90} />
           </div>
         </div>
       </section>
@@ -217,8 +225,8 @@ export default function Portfolio() {
       {/* Projects Section */}
       <section id="projects" className="py-32 relative">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-teal-professional-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-amber-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
         </div>
 
         <div className="container relative z-10">
@@ -226,52 +234,52 @@ export default function Portfolio() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
             <ProjectCard
-              title="E-commerce Platform"
-              description="A full-stack e-commerce platform built with Next.js, Stripe, and Prisma."
-              tags={["Next.js", "TypeScript", "Prisma", "Stripe"]}
+              title="Plataforma Web Chiquimudi"
+              description="Desarrollo de APIs con Django y diseño de base de datos para plataforma web empresarial."
+              tags={["Django", "Python", "SQL", "Auth0", "UML"]}
               image="/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
-              repoUrl="https://github.com"
+              repoUrl="https://github.com/edgards1"
             />
             <ProjectCard
-              title="Task Management App"
-              description="A collaborative task management application with real-time updates."
-              tags={["React", "Firebase", "Tailwind CSS", "Redux"]}
+              title="Interfaces Web Prestto Solutions"
+              description="Desarrollo de interfaces dinámicas con React y Angular, integración de APIs y optimización UX."
+              tags={["React", "Angular", "JavaScript", "Figma", "WCAG"]}
               image="/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
-              repoUrl="https://github.com"
+              repoUrl="https://github.com/edgards1"
             />
             <ProjectCard
-              title="AI Content Generator"
-              description="An AI-powered content generation tool using OpenAI's GPT models."
-              tags={["Next.js", "OpenAI API", "Node.js", "MongoDB"]}
+              title="Plataforma Fidens Insurtech"
+              description="Módulos especializados para el sector seguros con Angular y automatización de procesos."
+              tags={["Angular", "SQL Server", "C#", "Chattigo", "Windows Services"]}
               image="/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
-              repoUrl="https://github.com"
+              repoUrl="https://github.com/edgards1"
             />
             <ProjectCard
-              title="Fitness Tracker"
-              description="A mobile-first fitness tracking application with data visualization."
-              tags={["React Native", "TypeScript", "D3.js", "Firebase"]}
+              title="Sistema de Gestión Web"
+              description="Aplicación full-stack con autenticación, panel administrativo y API REST."
+              tags={[".NET", "C#", "SQL Server", "Bootstrap"]}
               image="/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
-              repoUrl="https://github.com"
+              repoUrl="https://github.com/edgards1"
             />
             <ProjectCard
-              title="Weather Dashboard"
-              description="A beautiful weather dashboard with forecasts and historical data."
-              tags={["React", "Weather API", "Chart.js", "Styled Components"]}
+              title="Chatbot Conversacional"
+              description="Desarrollo de chatbot con Chattigo para automatización de atención al cliente."
+              tags={["Chattigo", "JavaScript", "API Integration"]}
               image="/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
-              repoUrl="https://github.com"
+              repoUrl="https://github.com/edgards1"
             />
             <ProjectCard
-              title="Portfolio Website"
-              description="This portfolio website built with Next.js and Tailwind CSS."
-              tags={["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"]}
+              title="Dashboard Analytics"
+              description="Panel de control con visualización de datos y reportes en tiempo real."
+              tags={["React", "TypeScript", "Chart.js", "SQL Server"]}
               image="/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
-              repoUrl="https://github.com"
+              repoUrl="https://github.com/edgards1"
             />
           </div>
         </div>
@@ -280,8 +288,8 @@ export default function Portfolio() {
       {/* Experience Section */}
       <section id="experience" className="py-32 relative">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-blue-deep-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
         </div>
 
         <div className="container relative z-10">
@@ -296,8 +304,8 @@ export default function Portfolio() {
       {/* Contact Section */}
       <section id="contact" className="py-32 relative">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-teal-professional-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+          <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
         </div>
 
         <div className="container relative z-10">
@@ -309,29 +317,29 @@ export default function Portfolio() {
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center">
-                    <Mail className="h-5 w-5 text-purple-400" />
+                    <Mail className="h-5 w-5 text-blue-deep-400" />
                   </div>
                   <div>
                     <div className="text-sm text-zinc-500">Email</div>
-                    <div className="font-medium">hello@example.com</div>
+                    <div className="font-medium">edgar_delgado_scott@hotmail.com</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center">
-                    <Linkedin className="h-5 w-5 text-purple-400" />
+                    <Linkedin className="h-5 w-5 text-blue-deep-400" />
                   </div>
                   <div>
                     <div className="text-sm text-zinc-500">LinkedIn</div>
-                    <div className="font-medium">linkedin.com/in/shinekyawkyawaung</div>
+                    <div className="font-medium">linkedin.com/in/edgar-delgado-scott</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center">
-                    <Github className="h-5 w-5 text-purple-400" />
+                    <Github className="h-5 w-5 text-blue-deep-400" />
                   </div>
                   <div>
                     <div className="text-sm text-zinc-500">GitHub</div>
-                    <div className="font-medium">github.com/shinekyawkyawaung</div>
+                    <div className="font-medium">github.com/edgards1</div>
                   </div>
                 </div>
               </div>
@@ -355,15 +363,17 @@ export default function Portfolio() {
         <div className="container flex flex-col md:flex-row justify-between items-center gap-6">
           <div>
             <Link href="/" className="font-bold text-xl">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">Shine</span>
-              <span className="text-white">KKA</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-deep-400 to-teal-professional-500">
+                Edgar
+              </span>
+              <span className="text-white">Delgado</span>
             </Link>
             <p className="text-sm text-zinc-500 mt-2">
-              © {new Date().getFullYear()} Shine Kyaw Kyaw Aung. All rights reserved.
+              © {new Date().getFullYear()} Edgar Eduardo Delgado Scott. All rights reserved.
             </p>
           </div>
           <div className="flex gap-4">
-            <Link href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <Link href="https://github.com/edgards1" target="_blank" rel="noopener noreferrer">
               <Button
                 variant="ghost"
                 size="icon"
@@ -373,7 +383,7 @@ export default function Portfolio() {
                 <span className="sr-only">GitHub</span>
               </Button>
             </Link>
-            <Link href="https://www.linkedin.com/in/shinekyawkyawaung/" target="_blank" rel="noopener noreferrer">
+            <Link href="https://www.linkedin.com/in/edgar-delgado-scott" target="_blank" rel="noopener noreferrer">
               <Button
                 variant="ghost"
                 size="icon"
@@ -393,7 +403,7 @@ export default function Portfolio() {
                 <span className="sr-only">Twitter</span>
               </Button>
             </Link>
-            <Link href="mailto:hello@example.com">
+            <Link href="mailto:edgar_delgado_scott@hotmail.com">
               <Button
                 variant="ghost"
                 size="icon"

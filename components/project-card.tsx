@@ -29,11 +29,11 @@ export function ProjectCard({ title, description, tags, image, demoUrl, repoUrl 
       className="group"
     >
       <div
-        className="relative h-full overflow-hidden rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 transition-all duration-300 group-hover:border-purple-500/50"
+        className="relative h-full overflow-hidden rounded-xl bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 transition-all duration-300 group-hover:border-teal-professional-500/50"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+        <div className="absolute -inset-1 bg-gradient-to-r from-blue-deep-500/10 to-teal-professional-500/10 rounded-xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
 
         <div className="relative h-full flex flex-col">
           <div className="relative overflow-hidden h-48">
@@ -66,7 +66,7 @@ export function ProjectCard({ title, description, tags, image, demoUrl, repoUrl 
               </Button>
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 border-0"
+                className="bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 hover:from-teal-professional-600 hover:to-blue-deep-600 border-0"
                 asChild
               >
                 <Link href={demoUrl} target="_blank" rel="noopener noreferrer">

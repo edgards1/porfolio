@@ -5,32 +5,40 @@ import { useMobile } from "@/hooks/use-mobile"
 
 const experiences = [
   {
-    title: "Frontend Developer",
+    title: "FullStack Developer",
     company: "Fidens® Insurtech as a Service",
     period: "Marzo 2024 - Actualidad",
-    description:
-      "Desarrollo y mantenimiento de interfaces web dinámicas utilizando Angular. Construcción de módulos especializados para plataformas del sector de seguros. Automatización de procesos operativos mediante servicios Windows y optimización de procedimientos almacenados en SQL Server.",
+    description: [
+      "🔧 Desarrollo y mantenimiento de interfaces web dinámicas utilizando Angular, aplicando principios de diseño responsivo y buenas prácticas de desarrollo de componentes.",
+      "🧩 Construcción de módulos especializados para plataformas del sector de seguros, alineados con requerimientos funcionales y técnicos complejos.",
+      "⚙️ Automatización de procesos operativos mediante servicios Windows, orientados a aumentar la eficiencia, reducir errores manuales y optimizar flujos internos.",
+      "🗄️ Optimización de procedimientos almacenados en SQL Server con enfoque en el rendimiento de consultas y la integridad de datos.",
+      "🤖 Diseño y desarrollo de chatbots utilizando Chattigo, integrando funcionalidades conversacionales para mejorar la experiencia del usuario y automatizar la atención al cliente."
+    ],
   },
   {
     title: "Front-End Developer",
     company: "Prestto Solutions",
     period: "Junio 2023 – Febrero 2024",
-    description:
-      "Diseño y desarrollo de interfaces web con HTML5, CSS3 y JavaScript moderno, utilizando React y Angular. Integración de APIs, implementación de prototipos UI/UX de Figma, y aplicación de principios de accesibilidad web (WCAG).",
+    description: [
+      "🖥️ Diseño y desarrollo de interfaces web mediante tecnologías como HTML5, CSS3 y JavaScript moderno, utilizando frameworks como React y Angular para la creación de componentes dinámicos y reutilizables.",
+      "🔌 Integración de librerías externas y APIs para mejorar la funcionalidad y rendimiento de las aplicaciones, priorizando buenas prácticas y arquitectura modular.",
+      "🎨 Implementación de prototipos y diseños UI/UX elaborados en Figma, asegurando fidelidad visual y consistencia con la identidad del producto.",
+      "📱 Optimización de la experiencia de usuario (UX) en aplicaciones web escalables, garantizando la responsividad en distintos dispositivos y navegadores.",
+      "♿ Aplicación de principios de accesibilidad web (WCAG) para el diseño de interfaces inclusivas, asegurando una navegación intuitiva y fluida para todos los usuarios."
+    ]
   },
   {
     title: "Back-End Developer",
     company: "Chiquimudi S.A",
     period: "Noviembre 2022 – Febrero 2023",
-    description:
-      "Elaboración de modelos UML, colaboración en diseño de base de datos, desarrollo de APIs con Django, implementación de rutas y controladores, y sistemas de autenticación con Auth0.",
-  },
-  {
-    title: "Estudiante",
-    company: "Instituto Tecnológico Superior Guayaquil",
-    period: "2020 - 2024",
-    description:
-      "Tecnólogo Superior en Desarrollo de Software. Formación en programación, bases de datos, desarrollo web y metodologías ágiles.",
+    description: [
+      "📐 Modelado UML: Elaboración de diagramas de clases, casos de uso y secuencia para representar la arquitectura lógica y funcional de la plataforma.",
+      "🗃️ Diseño de Base de Datos: Colaboración en la definición de tablas, relaciones y esquemas de datos, asegurando integridad referencial y escalabilidad.",
+      "🔗 Desarrollo de APIs REST con Django: Implementación de endpoints para facilitar la comunicación entre el frontend y el backend, siguiendo principios RESTful.",
+      "🌐 Gestión de Rutas y Controladores: Configuración de rutas y desarrollo de controladores para manejar solicitudes HTTP (GET, POST, PUT, DELETE).",
+      "🔐 Seguridad y Autenticación: Participación en la integración de Auth0 para la autenticación y autorización de usuarios, garantizando el acceso seguro a los recursos de la aplicación."
+    ]
   },
 ]
 
@@ -65,7 +73,21 @@ export function Timeline() {
                 <div className="text-zinc-400 mb-4">
                   {experience.company} | {experience.period}
                 </div>
-                <p className="text-zinc-300">{experience.description}</p>
+                <ul className="text-zinc-300 space-y-2">
+                  {Array.isArray(experience.description) ? (
+                    experience.description.map((item, idx) => (
+                      <li key={idx} className="flex items-start">
+                        {/* <span className="text-teal-professional-500 mr-2">•</span> */}
+                        <span>{item}</span>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="flex items-start">
+                      <span className="text-teal-professional-500 mr-2">•</span>
+                      <span>{experience.description}</span>
+                    </li>
+                  )}
+                </ul>
               </div>
             </div>
           </motion.div>

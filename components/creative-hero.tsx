@@ -187,7 +187,7 @@ export function CreativeHero() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <canvas ref={canvasRef} className="w-full h-full" style={{ display: "block" }} />
+      <canvas ref={canvasRef} className="w-full h-full" />
     </motion.div>
   )
 }

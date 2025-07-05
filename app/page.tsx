@@ -1,7 +1,11 @@
+"use client"
+
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail, Twitter } from "lucide-react"
+import { motion } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { ProjectCard } from "@/components/project-card"
 import { SkillBadge } from "@/components/skill-badge"
 import { Timeline } from "@/components/timeline"
@@ -32,7 +36,7 @@ export default function Portfolio() {
           <div className="space-y-6">
             <div className="inline-block">
               <div className="relative px-3 py-1 text-sm font-medium rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4">
-                <span className="relative z-10">Software Engineer & Creative Developer</span>
+                <span className="relative z-10">Software Developer & Creative Developer</span>
                 <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-deep-500/20 to-teal-professional-500/20 animate-pulse"></span>
               </div>
             </div>
@@ -47,20 +51,24 @@ export default function Portfolio() {
               tecnológica. Me especializo en la arquitectura y desarrollo de soluciones integrales.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button className="relative overflow-hidden group bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 border-0">
+              <Button className="relative me-4 overflow-hidden group bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 border-0">
                 <span className="relative z-10 flex items-center">
-                  View Projects <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  Ver Proyectos <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
                 <span className="absolute inset-0 bg-gradient-to-r from-teal-professional-600 to-blue-deep-600 opacity-0 group-hover:opacity-100 transition-opacity"></span>
               </Button>
-              <Button
+              {/* <Button
                 variant="outline"
-                className="border-zinc-700 text-zinc-300 hover:text-white hover:border-zinc-500 bg-transparent"
+                className="relative overflow-hidden group border-zinc-700 text-zinc-300 bg-transparent hover:border-transparent transition-all duration-300"
               >
-                Contact Me
-              </Button>
-            </div>
-            <div className="flex gap-4 pt-4">
+                <span className="relative z-10 flex transition-colors duration-300 group-hover:text-white">
+                  Hablemos
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-deep-600/20 to-teal-professional-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <span className="absolute inset-0 border border-transparent bg-gradient-to-r from-blue-deep-500 to-teal-professional-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md"></span>
+                <span className="absolute inset-[1px] bg-zinc-900 rounded-[calc(0.375rem-1px)] group-hover:bg-transparent transition-colors duration-300"></span>
+              </Button> */}
+            <div className="flex gap-4">
               <Link href="https://github.com/edgards1" target="_blank" rel="noopener noreferrer">
                 <Button
                   variant="ghost"
@@ -71,7 +79,7 @@ export default function Portfolio() {
                   <span className="sr-only">GitHub</span>
                 </Button>
               </Link>
-              <Link href="https://www.linkedin.com/in/edgar-delgado-scott" target="_blank" rel="noopener noreferrer">
+              <Link href="https://www.linkedin.com/in/edgard-s1" target="_blank" rel="noopener noreferrer">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -79,16 +87,6 @@ export default function Portfolio() {
                 >
                   <Linkedin className="h-5 w-5" />
                   <span className="sr-only">LinkedIn</span>
-                </Button>
-              </Link>
-              <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full bg-zinc-800/50 hover:bg-zinc-800 text-zinc-400 hover:text-white"
-                >
-                  <Twitter className="h-5 w-5" />
-                  <span className="sr-only">Twitter</span>
                 </Button>
               </Link>
               <Link href="mailto:edgar_delgado_scott@hotmail.com">
@@ -101,9 +99,10 @@ export default function Portfolio() {
                   <span className="sr-only">Email</span>
                 </Button>
               </Link>
+            </div>            
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="justify-center hidden sm:block">
             <CreativeHero />
           </div>
         </div>
@@ -164,19 +163,19 @@ export default function Portfolio() {
                 <div className="grid grid-cols-2 gap-4 mt-8">
                   <div className="space-y-1">
                     <div className="text-sm text-zinc-500">Nombre</div>
-                    <div className="font-medium">Edgar Eduardo Delgado Scott</div>
+                    <p className="font-medium">Edgar Eduardo Delgado Scott</p>
                   </div>
                   <div className="space-y-1">
                     <div className="text-sm text-zinc-500">Email</div>
-                    <div className="font-medium">edgar_delgado_scott@hotmail.com</div>
+                    <p className="font-medium">edgar_delgado_scott@hotmail.com</p>
                   </div>
                   <div className="space-y-1">
                     <div className="text-sm text-zinc-500">Ubicación</div>
-                    <div className="font-medium">Guayaquil, Ecuador</div>
+                    <p className="font-medium">Guayaquil, Ecuador</p>
                   </div>
                   <div className="space-y-1">
                     <div className="text-sm text-zinc-500">Teléfono</div>
-                    <div className="font-medium">0995658194</div>
+                    <p className="font-medium">0995658194</p>
                   </div>
                 </div>
 
@@ -199,26 +198,95 @@ export default function Portfolio() {
         <div className="container relative z-10">
           <SectionHeading title="My Skills" subtitle="Technologies I work with" />
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-16">
-            <SkillBadge name="JavaScript" level={90} />
-            <SkillBadge name="TypeScript" level={85} />
-            <SkillBadge name="React" level={90} />
-            <SkillBadge name="Angular" level={85} />
-            <SkillBadge name="HTML5" level={95} />
-            <SkillBadge name="CSS3" level={90} />
-            <SkillBadge name="Bootstrap" level={85} />
-            <SkillBadge name="Tailwind CSS" level={90} />
-            <SkillBadge name="C#" level={80} />
-            <SkillBadge name="Python" level={85} />
-            <SkillBadge name=".NET" level={80} />
-            <SkillBadge name="Django" level={85} />
-            <SkillBadge name="Flask" level={75} />
-            <SkillBadge name="Express" level={75} />
-            <SkillBadge name="SQL Server" level={85} />
-            <SkillBadge name="MySQL" level={80} />
-            <SkillBadge name="Docker" level={70} />
-            <SkillBadge name="Git" level={90} />
-          </div>
+          {/* Tabs filter for technologies */}
+          <Tabs defaultValue="all" className="w-full">
+            <motion.div 
+              className="flex justify-center mt-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <TabsList className="grid grid-cols-3 bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50">
+                <TabsTrigger 
+                  value="all" 
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-deep-600 data-[state=active]:to-teal-professional-600 data-[state=active]:text-white"
+                >
+                  All
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="frontend"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-deep-600 data-[state=active]:to-teal-professional-600 data-[state=active]:text-white"
+                >
+                  Frontend
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="backend"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-deep-600 data-[state=active]:to-teal-professional-600 data-[state=active]:text-white"
+                >
+                  Backend
+                </TabsTrigger>
+              </TabsList>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <TabsContent value="all" className="mt-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  <SkillBadge name="JavaScript" level={90} />
+                  <SkillBadge name="TypeScript" level={85} />
+                  <SkillBadge name="Angular" level={90} />
+                  <SkillBadge name="React" level={80} />
+                  <SkillBadge name="HTML5" level={95} />
+                  <SkillBadge name="CSS3" level={90} />
+                  <SkillBadge name="Bootstrap" level={90} />
+                  <SkillBadge name="Tailwind CSS" level={80} />
+                  <SkillBadge name="C#" level={80} />
+                  <SkillBadge name="Python" level={85} />
+                  <SkillBadge name=".NET" level={80} />
+                  <SkillBadge name="Django" level={85} />
+                  <SkillBadge name="Flask" level={75} />
+                  <SkillBadge name="Express" level={75} />
+                  <SkillBadge name="SQL Server" level={85} />
+                  <SkillBadge name="MySQL" level={80} />
+                  <SkillBadge name="Docker" level={70} />
+                  <SkillBadge name="Git" level={90} />
+                </div>
+              </TabsContent>
+
+              <TabsContent value="frontend" className="mt-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  <SkillBadge name="JavaScript" level={90} />
+                  <SkillBadge name="TypeScript" level={85} />
+                  <SkillBadge name="Angular" level={90} />
+                  <SkillBadge name="React" level={80} />
+                  <SkillBadge name="HTML5" level={95} />
+                  <SkillBadge name="CSS3" level={90} />
+                  <SkillBadge name="Bootstrap" level={90} />
+                  <SkillBadge name="Tailwind CSS" level={80} />
+                </div>
+              </TabsContent>
+
+              <TabsContent value="backend" className="mt-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  <SkillBadge name="C#" level={80} />
+                  <SkillBadge name="Python" level={85} />
+                  <SkillBadge name=".NET" level={80} />
+                  <SkillBadge name="Django" level={85} />
+                  <SkillBadge name="Flask" level={75} />
+                  <SkillBadge name="Express" level={75} />
+                  <SkillBadge name="SQL Server" level={85} />
+                  <SkillBadge name="MySQL" level={80} />
+                  <SkillBadge name="Docker" level={70} />
+                  <SkillBadge name="Git" level={90} />
+                </div>
+              </TabsContent>
+            </motion.div>
+          </Tabs>
         </div>
       </section>
 
@@ -237,7 +305,7 @@ export default function Portfolio() {
               title="Plataforma Web Chiquimudi"
               description="Desarrollo de APIs con Django y diseño de base de datos para plataforma web empresarial."
               tags={["Django", "Python", "SQL", "Auth0", "UML"]}
-              image="/placeholder.svg?height=400&width=600"
+              image="/img/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
               repoUrl="https://github.com/edgards1"
             />
@@ -245,7 +313,7 @@ export default function Portfolio() {
               title="Interfaces Web Prestto Solutions"
               description="Desarrollo de interfaces dinámicas con React y Angular, integración de APIs y optimización UX."
               tags={["React", "Angular", "JavaScript", "Figma", "WCAG"]}
-              image="/placeholder.svg?height=400&width=600"
+              image="/img/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
               repoUrl="https://github.com/edgards1"
             />
@@ -253,7 +321,7 @@ export default function Portfolio() {
               title="Plataforma Fidens Insurtech"
               description="Módulos especializados para el sector seguros con Angular y automatización de procesos."
               tags={["Angular", "SQL Server", "C#", "Chattigo", "Windows Services"]}
-              image="/placeholder.svg?height=400&width=600"
+              image="/img/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
               repoUrl="https://github.com/edgards1"
             />
@@ -261,7 +329,7 @@ export default function Portfolio() {
               title="Sistema de Gestión Web"
               description="Aplicación full-stack con autenticación, panel administrativo y API REST."
               tags={[".NET", "C#", "SQL Server", "Bootstrap"]}
-              image="/placeholder.svg?height=400&width=600"
+              image="/img/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
               repoUrl="https://github.com/edgards1"
             />
@@ -269,7 +337,7 @@ export default function Portfolio() {
               title="Chatbot Conversacional"
               description="Desarrollo de chatbot con Chattigo para automatización de atención al cliente."
               tags={["Chattigo", "JavaScript", "API Integration"]}
-              image="/placeholder.svg?height=400&width=600"
+              image="/img/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
               repoUrl="https://github.com/edgards1"
             />
@@ -277,7 +345,7 @@ export default function Portfolio() {
               title="Dashboard Analytics"
               description="Panel de control con visualización de datos y reportes en tiempo real."
               tags={["React", "TypeScript", "Chart.js", "SQL Server"]}
-              image="/placeholder.svg?height=400&width=600"
+              image="/img/placeholder.svg?height=400&width=600"
               demoUrl="https://example.com"
               repoUrl="https://github.com/edgards1"
             />
@@ -330,7 +398,7 @@ export default function Portfolio() {
                   </div>
                   <div>
                     <div className="text-sm text-zinc-500">LinkedIn</div>
-                    <div className="font-medium">linkedin.com/in/edgar-delgado-scott</div>
+                    <div className="font-medium">www.linkedin.com/in/edgard-s1/</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail, Twitter } from "lucide-react"
+import { useState } from "react"
 import { motion } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
@@ -16,8 +17,11 @@ import { MouseFollower } from "@/components/mouse-follower"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { SectionHeading } from "@/components/section-heading"
 import { GlassmorphicCard } from "@/components/glassmorphic-card"
+import { CvModal } from "@/components/cv-modal"
 
 export default function Portfolio() {
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-900 to-black text-white overflow-hidden">
       <MouseFollower />
@@ -180,13 +184,24 @@ export default function Portfolio() {
                 </div>
 
                 <div className="mt-8">
-                  <Button className="bg-zinc-800 hover:bg-zinc-700 text-white">Download Resume</Button>
+                  <Button 
+                    onClick={() => setIsResumeModalOpen(true)}
+                    className="bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 hover:from-teal-professional-600 hover:to-blue-deep-600 text-white border-0"
+                  >
+                    Descargar CV
+                  </Button>
                 </div>
               </GlassmorphicCard>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Modal CV */}
+      <CvModal
+        isOpen={isResumeModalOpen}
+        onClose={() => setIsResumeModalOpen(false)}
+      />
 
       {/* Skills Section */}
       <section id="skills" className="py-32 relative">
@@ -250,6 +265,7 @@ export default function Portfolio() {
                   <SkillBadge name=".NET" level={80} />
                   <SkillBadge name="Django" level={85} />
                   <SkillBadge name="Flask" level={75} />
+                  <SkillBadge name="NodeJS" level={80} />
                   <SkillBadge name="Express" level={75} />
                   <SkillBadge name="SQL Server" level={85} />
                   <SkillBadge name="MySQL" level={80} />
@@ -279,6 +295,7 @@ export default function Portfolio() {
                   <SkillBadge name="Django" level={85} />
                   <SkillBadge name="Flask" level={75} />
                   <SkillBadge name="Express" level={75} />
+                  <SkillBadge name="NodeJS" level={80} />
                   <SkillBadge name="SQL Server" level={85} />
                   <SkillBadge name="MySQL" level={80} />
                   <SkillBadge name="Docker" level={70} />

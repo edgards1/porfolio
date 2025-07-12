@@ -52,24 +52,15 @@ export function CreativeHero() {
       color: string
       distance: number
 
-      constructor(x: number, y: number) {
+      constructor(x: number, y: number, color: string) {
         this.x = x
         this.y = y
         this.baseX = x
         this.baseY = y
-        this.size = Math.random() * 5 + 2
-        this.density = Math.random() * 30 + 1
+        this.size = Math.random() * 6 + 3
+        this.density = Math.random() * 30 + 10
         this.distance = 0
-
-        // Create a gradient from blue to teal with amber accents
-        const colorOptions = [
-          `hsl(214, 100%, 60%)`, // Blue
-          `hsl(178, 84%, 50%)`, // Teal
-          `hsl(43, 96%, 56%)`, // Amber
-          `hsl(214, 100%, 70%)`, // Light Blue
-          `hsl(178, 84%, 60%)`, // Light Teal
-        ]
-        this.color = colorOptions[Math.floor(Math.random() * colorOptions.length)]
+        this.color = color
       }
 
       update() {
@@ -88,8 +79,21 @@ export function CreativeHero() {
           const directionX = forceDirectionX * force * this.density
           const directionY = forceDirectionY * force * this.density
 
-          this.x -= directionX
-          this.y -= directionY
+          // Calculate new positions
+          let newX = this.x - directionX
+          let newY = this.y - directionY
+
+          // Get canvas dimensions
+          const canvasWidth = canvas.width / devicePixelRatio
+          const canvasHeight = canvas.height / devicePixelRatio
+
+          // Apply boundary constraints with padding
+          const padding = this.size + 5
+          newX = Math.max(padding, Math.min(canvasWidth - padding, newX))
+          newY = Math.max(padding, Math.min(canvasHeight - padding, newY))
+
+          this.x = newX
+          this.y = newY
         } else {
           if (this.x !== this.baseX) {
             const dx = this.x - this.baseX
@@ -111,16 +115,15 @@ export function CreativeHero() {
       }
     }
 
-    // Create particle grid
+    // Create particle array
     const particlesArray: Particle[] = []
-    const particleCount = 1000
-    const gridSize = 30
 
-    function init() {
+    // Initialize particles
+    const initParticles = () => {
       particlesArray.length = 0
-
       const canvasWidth = canvas.width / devicePixelRatio
       const canvasHeight = canvas.height / devicePixelRatio
+      const gridSize = 30
 
       const numX = Math.floor(canvasWidth / gridSize)
       const numY = Math.floor(canvasHeight / gridSize)
@@ -129,12 +132,20 @@ export function CreativeHero() {
         for (let x = 0; x < numX; x++) {
           const posX = x * gridSize + gridSize / 2
           const posY = y * gridSize + gridSize / 2
-          particlesArray.push(new Particle(posX, posY))
+
+          const colorOptions = [
+            `hsl(214, 100%, 60%)`, // Blue
+            `hsl(178, 84%, 50%)`, // Teal
+            `hsl(43, 96%, 56%)`, // Amber
+            `hsl(214, 100%, 70%)`, // Light Blue
+            `hsl(178, 84%, 60%)`, // Light Teal
+          ]
+          const color = colorOptions[Math.floor(Math.random() * colorOptions.length)]
+
+          particlesArray.push(new Particle(posX, posY, color))
         }
       }
     }
-
-    init()
 
     // Animation loop
     const animate = () => {
@@ -144,39 +155,31 @@ export function CreativeHero() {
       mouseX += (targetX - mouseX) * 0.1
       mouseY += (targetY - mouseY) * 0.1
 
-      // Draw connections
+      // Update and draw particles
       for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update()
         particlesArray[i].draw()
-
-        // Draw connections
-        for (let j = i; j < particlesArray.length; j++) {
-          const dx = particlesArray[i].x - particlesArray[j].x
-          const dy = particlesArray[i].y - particlesArray[j].y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-
-          if (distance < 30) {
-            ctx.beginPath()
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.2 - distance / 150})` // Blue connections
-            ctx.lineWidth = 0.5
-            ctx.moveTo(particlesArray[i].x, particlesArray[i].y)
-            ctx.lineTo(particlesArray[j].x, particlesArray[j].y)
-            ctx.stroke()
-          }
-        }
       }
 
       requestAnimationFrame(animate)
     }
 
+    // Initialize
+    initParticles()
     animate()
 
     // Handle window resize
-    window.addEventListener("resize", init)
+    const handleResize = () => {
+      setCanvasDimensions()
+      // Reinitialize particles on resize
+      setTimeout(initParticles, 100)
+    }
+
+    window.addEventListener("resize", handleResize)
 
     return () => {
       window.removeEventListener("resize", setCanvasDimensions)
-      window.removeEventListener("resize", init)
+      window.removeEventListener("resize", handleResize)
     }
   }, [])
 

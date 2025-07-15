@@ -18,6 +18,7 @@ import { ScrollProgress } from "@/components/scroll-progress"
 import { SectionHeading } from "@/components/section-heading"
 import { GlassmorphicCard } from "@/components/glassmorphic-card"
 import { CvModal } from "@/components/cv-modal"
+import { ContactIcon } from "@/components/contact-icon"
 
 export default function Portfolio() {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false)
@@ -45,7 +46,7 @@ export default function Portfolio() {
               </div>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-              <span className="block">Hi, I'm</span>
+              <span className="block">Hola, soy</span>
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-deep-400 to-teal-professional-500">
                 Edgar Eduardo Delgado Scott
               </span>
@@ -126,7 +127,7 @@ export default function Portfolio() {
         </div>
 
         <div className="container relative z-10">
-          <SectionHeading title="About Me" subtitle="My background and journey" />
+          <SectionHeading title="Sobre mi" subtitle="Mi trayectoria" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-16">
             <div className="relative">
@@ -166,20 +167,20 @@ export default function Portfolio() {
 
                 <div className="grid grid-cols-2 gap-4 mt-8">
                   <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Nombre</div>
-                    <p className="font-medium">Edgar Eduardo Delgado Scott</p>
+                  <div className="text-sm text-zinc-500">Nombre</div>
+                  <p className="font-medium">Edgar Eduardo Delgado Scott</p>
+                  </div>
+                  <div className="space-y-1 hidden md:block">
+                  <div className="text-sm text-zinc-500">Email</div>
+                  <p className="font-medium">edgar_delgado_scott@hotmail.com</p>
                   </div>
                   <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Email</div>
-                    <p className="font-medium">edgar_delgado_scott@hotmail.com</p>
+                  <div className="text-sm text-zinc-500">Ubicación</div>
+                  <p className="font-medium">Guayaquil, Ecuador</p>
                   </div>
                   <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Ubicación</div>
-                    <p className="font-medium">Guayaquil, Ecuador</p>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Teléfono</div>
-                    <p className="font-medium">0995658194</p>
+                  <div className="text-sm text-zinc-500">Teléfono</div>
+                  <p className="font-medium">0995658194</p>
                   </div>
                 </div>
 
@@ -211,7 +212,7 @@ export default function Portfolio() {
         </div>
 
         <div className="container relative z-10">
-          <SectionHeading title="My Skills" subtitle="Technologies I work with" />
+          <SectionHeading title="My Skills" subtitle="Tecnologías en las que me desempeño" />
 
           {/* Tabs filter for technologies */}
           <Tabs defaultValue="all" className="w-full">
@@ -392,69 +393,187 @@ export default function Portfolio() {
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-teal-professional-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
           <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
         </div>
-
+      
         <div className="container relative z-10">
           <SectionHeading title="Get In Touch" subtitle="Let's work together" />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-16">
-            <GlassmorphicCard>
-              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center">
-                    <Mail className="h-5 w-5 text-blue-deep-400" />
+      
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mt-16">
+            {/* Contact Information Card - Enhanced */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <GlassmorphicCard className="h-full">
+                <div className="relative">
+                  {/* Header with icon */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 flex items-center justify-center">
+                      <Mail className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold">Información de Contacto</h3>
+                      {/* <p className="text-zinc-400 text-sm">Ready to start a conversation</p> */}
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-sm text-zinc-500">Email</div>
-                    <div className="font-medium">edgar_delgado_scott@hotmail.com</div>
+      
+                  {/* Contact Items with enhanced interactions */}
+                  <div className="space-y-4">
+                    {[
+                      {
+                        icon: Mail,
+                        label: "Email",
+                        value: "edgar_delgado_scott@hotmail.com",
+                        href: "mailto:edgar_delgado_scott@hotmail.com",
+                        color: "text-blue-400"
+                      },
+                      {
+                        icon: Linkedin,
+                        label: "LinkedIn",
+                        value: "www.linkedin.com/in/edgard-s1/",
+                        href: "https://www.linkedin.com/in/edgard-s1/",
+                        color: "text-blue-500"
+                      },
+                      {
+                        icon: Github,
+                        label: "GitHub",
+                        value: "github.com/edgards1",
+                        href: "https://github.com/edgards1",
+                        color: "text-zinc-300"
+                      }
+                    ].map((contact, index) => (
+                      <motion.a
+                        key={contact.label}
+                        href={contact.href}
+                        target={contact.href.startsWith('http') ? '_blank' : undefined}
+                        rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="group flex items-center gap-4 p-4 rounded-lg bg-zinc-800/30 hover:bg-zinc-800/50 transition-all duration-300 cursor-pointer border border-transparent hover:border-zinc-600/50"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                        viewport={{ once: true }}
+                        whileHover={{ scale: 1.02, x: 5 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <div className="w-12 h-12 rounded-full bg-zinc-700/50 group-hover:bg-zinc-700 flex items-center justify-center transition-all duration-300">
+                          <contact.icon className={`h-5 w-5 ${contact.color} group-hover:scale-110 transition-transform duration-300`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm text-zinc-500 group-hover:text-zinc-400 transition-colors">
+                            {contact.label}
+                          </div>
+                          <div className="font-medium text-white group-hover:text-blue-deep-300 transition-colors truncate">
+                            {contact.value}
+                          </div>
+                        </div>
+                        <motion.div
+                          className="opacity-0 group-hover:opacity-100 transition-opacity"
+                          whileHover={{ x: 5 }}
+                        >
+                          <ArrowRight className="h-4 w-4 text-zinc-400" />
+                        </motion.div>
+                      </motion.a>
+                    ))}
                   </div>
+      
+                  {/* Status Section Enhanced */}
+                  <motion.div 
+                    className="mt-8 pt-8 border-t border-zinc-700/50"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <h4 className="text-lg font-medium mb-4 flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                      Current Status
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                        <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+                        <span className="text-green-300 font-medium">Available for freelance work</span>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                        <div className="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></div>
+                        <span className="text-blue-300 font-medium">Open to full-time opportunities</span>
+                      </div>
+                    </div>
+                  </motion.div>
+      
+                  {/* Response Time */}
+                  <motion.div
+                    className="mt-6 p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.4, delay: 0.8 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="flex items-center gap-2 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-purple-400 animate-ping"></div>
+                      <span className="text-purple-300 font-medium">
+                        Typical response time: Within 24 hours
+                      </span>
+                    </div>
+                  </motion.div>
+      
+                  {/* Alternative Contact Methods */}
+                  <motion.div
+                    className="mt-6"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 1 }}
+                    viewport={{ once: true }}
+                  >
+                    <p className="text-sm text-zinc-500 mb-3">Otras formas de contacto?</p>
+                    <div className="flex gap-3">
+                      {[
+                        { name: 'WhatsApp', icon: '/img/whatsapp-icon.svg', href: 'https://wa.me/593993018610'},
+                        { name: 'Instagram', icon: '/img/instagram-icon.svg', href: 'https://www.instagram.com/edgard.s1/'},
+                        { name: 'Discord', icon: '/img/discord-icon.svg', href: '#' }
+                      ].map((platform) => (
+                        <motion.a
+                          key={platform.name}
+                          href={platform.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`group flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-800/30 hover:bg-zinc-800/50 transition-all duration-300 text-sm`}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <ContactIcon 
+                            icon={platform.icon} 
+                            alt={`${platform.name} icon`}
+                            className="w-7 h-7"
+                          />
+                          <span>{platform.name}</span>
+                        </motion.a>
+                      ))}
+                    </div>
+                  </motion.div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center">
-                    <Linkedin className="h-5 w-5 text-blue-deep-400" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-zinc-500">LinkedIn</div>
-                    <div className="font-medium">www.linkedin.com/in/edgard-s1/</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center">
-                    <Github className="h-5 w-5 text-blue-deep-400" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-zinc-500">GitHub</div>
-                    <div className="font-medium">github.com/edgards1</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 pt-8 border-t border-zinc-800">
-                <h4 className="text-lg font-medium mb-4">Current Status</h4>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                  <span>Available for freelance work and full-time opportunities</span>
-                </div>
-              </div>
-            </GlassmorphicCard>
-
-            <ContactForm />
+              </GlassmorphicCard>
+            </motion.div>
+      
+            {/* Contact Form - Enhanced */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <ContactForm />
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800 py-12">
+      <footer className="border-t border-zinc-800 py-6">
         <div className="container flex flex-col md:flex-row justify-between items-center gap-6">
           <div>
-            <Link href="/" className="font-bold text-xl">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-deep-400 to-teal-professional-500">
-                Edgar
-              </span>
-              <span className="text-white">Delgado</span>
-            </Link>
             <p className="text-sm text-zinc-500 mt-2">
-              © {new Date().getFullYear()} Edgar Eduardo Delgado Scott. All rights reserved.
+              © {new Date().getFullYear()} Edgar Eduardo Delgado Scott. Todos los derechos reservados.
             </p>
           </div>
           <div className="flex gap-4">
@@ -468,7 +587,7 @@ export default function Portfolio() {
                 <span className="sr-only">GitHub</span>
               </Button>
             </Link>
-            <Link href="https://www.linkedin.com/in/edgar-delgado-scott" target="_blank" rel="noopener noreferrer">
+            <Link href="https://www.linkedin.com/in/edgard-s1/" target="_blank" rel="noopener noreferrer">
               <Button
                 variant="ghost"
                 size="icon"
@@ -476,16 +595,6 @@ export default function Portfolio() {
               >
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
-              </Button>
-            </Link>
-            <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full bg-zinc-800/50 hover:bg-zinc-800 text-zinc-400 hover:text-white"
-              >
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
               </Button>
             </Link>
             <Link href="mailto:edgar_delgado_scott@hotmail.com">

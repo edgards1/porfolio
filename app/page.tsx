@@ -19,6 +19,7 @@ import { SectionHeading } from "@/components/section-heading"
 import { GlassmorphicCard } from "@/components/glassmorphic-card"
 import { CvModal } from "@/components/cv-modal"
 import { ContactIcon } from "@/components/contact-icon"
+import { GitHubProjects } from "@/components/services/github-proyects"
 
 export default function Portfolio() {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false)
@@ -56,12 +57,22 @@ export default function Portfolio() {
               tecnológica. Me especializo en la arquitectura y desarrollo de soluciones integrales.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button className="relative me-4 overflow-hidden group bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 border-0">
-                <span className="relative z-10 flex items-center">
-                  Ver Proyectos <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-teal-professional-600 to-blue-deep-600 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-              </Button>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <Link href="#projects">
+                  <Button className="relative me-4 overflow-hidden group bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 border-0">
+                    <span className="relative z-10 flex items-center">
+                      Ver Proyectos{" "}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-teal-professional-600 to-blue-deep-600 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  </Button>
+                </Link>
+              </motion.div>
               {/* <Button
                 variant="outline"
                 className="relative overflow-hidden group border-zinc-700 text-zinc-300 bg-transparent hover:border-transparent transition-all duration-300"
@@ -142,7 +153,7 @@ export default function Portfolio() {
                 <div className="absolute bottom-0 left-0 w-full p-6">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="text-sm font-medium">Available for work</span>
+                    <span className="text-sm font-medium">Disponible</span>
                   </div>
                 </div>
               </div>
@@ -314,60 +325,51 @@ export default function Portfolio() {
           <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-teal-professional-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
           <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-amber-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
         </div>
-
+      
         <div className="container relative z-10">
-          <SectionHeading title="Featured Projects" subtitle="Some of my recent work" />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-            <ProjectCard
-              title="Plataforma Web Chiquimudi"
-              description="Desarrollo de APIs con Django y diseño de base de datos para plataforma web empresarial."
-              tags={["Django", "Python", "SQL", "Auth0", "UML"]}
-              image="/img/placeholder.svg?height=400&width=600"
-              demoUrl="https://example.com"
-              repoUrl="https://github.com/edgards1"
-            />
-            <ProjectCard
-              title="Interfaces Web Prestto Solutions"
-              description="Desarrollo de interfaces dinámicas con React y Angular, integración de APIs y optimización UX."
-              tags={["React", "Angular", "JavaScript", "Figma", "WCAG"]}
-              image="/img/placeholder.svg?height=400&width=600"
-              demoUrl="https://example.com"
-              repoUrl="https://github.com/edgards1"
-            />
-            <ProjectCard
-              title="Plataforma Fidens Insurtech"
-              description="Módulos especializados para el sector seguros con Angular y automatización de procesos."
-              tags={["Angular", "SQL Server", "C#", "Chattigo", "Windows Services"]}
-              image="/img/placeholder.svg?height=400&width=600"
-              demoUrl="https://example.com"
-              repoUrl="https://github.com/edgards1"
-            />
-            <ProjectCard
-              title="Sistema de Gestión Web"
-              description="Aplicación full-stack con autenticación, panel administrativo y API REST."
-              tags={[".NET", "C#", "SQL Server", "Bootstrap"]}
-              image="/img/placeholder.svg?height=400&width=600"
-              demoUrl="https://example.com"
-              repoUrl="https://github.com/edgards1"
-            />
-            <ProjectCard
-              title="Chatbot Conversacional"
-              description="Desarrollo de chatbot con Chattigo para automatización de atención al cliente."
-              tags={["Chattigo", "JavaScript", "API Integration"]}
-              image="/img/placeholder.svg?height=400&width=600"
-              demoUrl="https://example.com"
-              repoUrl="https://github.com/edgards1"
-            />
-            <ProjectCard
-              title="Dashboard Analytics"
-              description="Panel de control con visualización de datos y reportes en tiempo real."
-              tags={["React", "TypeScript", "Chart.js", "SQL Server"]}
-              image="/img/placeholder.svg?height=400&width=600"
-              demoUrl="https://example.com"
-              repoUrl="https://github.com/edgards1"
-            />
-          </div>
+          <SectionHeading title="Proyectos Destacados" subtitle="Mis repositorios más recientes de GitHub" />
+          
+          {/* Badge indicando conexión con GitHub */}
+          <motion.div
+            className="flex justify-center mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+              <span className="text-sm text-zinc-300">Conectado con GitHub</span>
+              <Github className="h-4 w-4 text-zinc-400" />
+            </div>
+          </motion.div>
+      
+          <GitHubProjects />
+          
+          {/* Call to action para ver más */}
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-zinc-400 mb-4">¿Te interesa ver más proyectos?</p>
+            <Button
+              variant="outline"
+              className="border-zinc-600 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+              asChild
+            >
+              <Link 
+                href="https://github.com/edgards1" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <Github className="h-4 w-4 mr-2" />
+                Ver todos en GitHub
+              </Link>
+            </Button>
+          </motion.div>
         </div>
       </section>
 
@@ -379,8 +381,7 @@ export default function Portfolio() {
         </div>
 
         <div className="container relative z-10">
-          <SectionHeading title="Work Experience" subtitle="My professional journey" />
-
+          <SectionHeading title="Experiencia Laboral" subtitle="Mi trayectoria profesional" />
           <div className="mt-16">
             <Timeline />
           </div>
@@ -395,7 +396,7 @@ export default function Portfolio() {
         </div>
       
         <div className="container relative z-10">
-          <SectionHeading title="Get In Touch" subtitle="Let's work together" />
+          <SectionHeading title="Contáctame" subtitle="Trabajemos juntos" />
       
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mt-16">
             {/* Contact Information Card - Enhanced */}
@@ -487,16 +488,16 @@ export default function Portfolio() {
                   >
                     <h4 className="text-lg font-medium mb-4 flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                      Current Status
+                      Estado actual
                     </h4>
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                         <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                        <span className="text-green-300 font-medium">Available for freelance work</span>
+                        <span className="text-green-300 font-medium">Disponible para trabajos freelance</span>
                       </div>
                       <div className="flex items-center gap-3 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                         <div className="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></div>
-                        <span className="text-blue-300 font-medium">Open to full-time opportunities</span>
+                        <span className="text-blue-300 font-medium">Abierto a oportunidades tiempo completo</span>
                       </div>
                     </div>
                   </motion.div>
@@ -512,7 +513,7 @@ export default function Portfolio() {
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-2 h-2 rounded-full bg-purple-400 animate-ping"></div>
                       <span className="text-purple-300 font-medium">
-                        Typical response time: Within 24 hours
+                        Tiempo de respuesta: Dentro de 24 horas
                       </span>
                     </div>
                   </motion.div>

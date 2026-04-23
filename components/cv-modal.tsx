@@ -154,9 +154,7 @@ export function CvModal({ isOpen, onClose }: ResumeModalProps) {
       scale: 1, 
       y: 0,
       transition: {
-        duration: 0.4,
-        ease: "easeOut",
-        type: "spring",
+        type: "spring" as const,
         stiffness: 300,
         damping: 30
       }
@@ -167,7 +165,7 @@ export function CvModal({ isOpen, onClose }: ResumeModalProps) {
       y: 20,
       transition: {
         duration: 0.3,
-        ease: "easeIn"
+        ease: "easeIn" as const
       }
     }
   }
@@ -316,7 +314,7 @@ export function CvModal({ isOpen, onClose }: ResumeModalProps) {
                           {downloadComplete ? (
                             <>
                               <CheckCircle className="h-5 w-5 mr-3 text-green-500" />
-                              <p class="text-zinc-800">¡Descargado!</p>
+                              <p className="text-zinc-800">¡Descargado!</p>
                             </>
                           ) : isDownloading ? (
                             <>
@@ -326,7 +324,7 @@ export function CvModal({ isOpen, onClose }: ResumeModalProps) {
                           ) : (
                             <>
                               <Download className="h-5 w-5 mr-3 text-zinc-900" />
-                               <p class="text-zinc-800">Descargar PDF</p>
+                               <p className="text-zinc-800">Descargar PDF</p>
                             </>
                           )}
                         </Button>

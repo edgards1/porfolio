@@ -4,7 +4,8 @@ import { motion } from "framer-motion"
 import type { ReactNode } from "react"
 
 interface GlassmorphicCardProps {
-  children: ReactNode
+  children: ReactNode,
+  className?: string
 }
 
 export function GlassmorphicCard({ children }: GlassmorphicCardProps) {

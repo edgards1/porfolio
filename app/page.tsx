@@ -255,8 +255,7 @@ export default function Portfolio() {
                   orientados a la experiencia del usuario.
                 </p>
                 <p className="text-base sm:text-lg text-zinc-300 mt-4">
-                  Tengo experiencia trabajando con tecnologías como React, Angular, Django, .NET, y bases de datos SQL
-                  Server y MySQL. Me apasiona crear interfaces intuitivas y sistemas robustos.
+                  Tengo experiencia trabajando con tecnologías como React, Angular, Nextjs, Express, Django, .NET, y bases de datos SQL y NoSQL. Me apasiona crear interfaces intuitivas y sistemas robustos.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">

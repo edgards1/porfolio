@@ -1,173 +1,213 @@
 export const translations = {
   es: {
-    // Hero Section
     roles: [
-      "Desarrollador de Software",
+      "Desarrollador FullStack",
       "Desarrollador Creativo",
-      "Ingeniero FullStack",
-      "Ingeniero Frontend",
+      "Software Engineer",
     ],
     hero: {
       greeting: "Hola, soy",
-      name: "Edgar Delgado Scott",
-      description: "Desarrollador FullStack con sólida formación técnica y una profunda vocación por la innovación tecnológica.",
+      description: "Desarrollador FullStack con +5 años de experiencia arquitectando y construyendo soluciones escalables. Me especializo en convertir requerimientos complejos en software limpio y eficiente.",
       cta: "Ver Proyectos",
+      statsYears: "Años Exp",
+      statsProjects: "Proyectos",
+      statsHours: "Horas Codeando",
     },
-    
-    // Navigation
     nav: {
-      about: "Sobre mí",
       skills: "Habilidades",
       projects: "Proyectos",
       experience: "Experiencia",
       contact: "Contacto",
     },
-    
-    // About Section
     about: {
       title: "Sobre mí",
-      subtitle: "Lo que hago",
-      description1: "Me especializo en diseñar y desarrollar soluciones integrales de software, con dominio tanto del ecosistema Frontend como Backend, aplicando arquitecturas modernas y escalables.",
-      description2: "Me apasiona crear interfaces intuitivas y sistemas robustos. Mi enfoque se basa en comprender a fondo la lógica y el flujo entre capas, aplicando buenas prácticas, patrones de diseño y metodologías ágiles con el propósito de crear productos escalables, eficientes y orientados a la experiencia del usuario.",
-      description3: "Tengo experiencia trabajando con tecnologías como",
-      technologies: "React, Angular, Next.js, Django, .NET, Express",
-      databases: "y bases de datos SQL Server y MySQL.",
+      subtitle: "Background",
+      para1: "Soy un Desarrollador FullStack con sólida formación técnica y una profunda vocación por la innovación tecnológica. Me especializo en la arquitectura y desarrollo de soluciones integrales.",
+      para2: "Mi enfoque se basa en comprender el flujo entre capas, aplicando buenas prácticas, patrones de diseño y metodologías ágiles para crear productos escalables, eficientes y centrados en la experiencia del usuario.",
+      para3: "Con experiencia en React, Angular, Next.js, Express, Django, .NET y bases de datos SQL y NoSQL, disfruto construir interfaces intuitivas y sistemas backend robustos.",
       name: "Nombre",
       email: "Email",
       location: "Ubicación",
       locationValue: "Guayaquil, Ecuador",
       phone: "Teléfono",
       downloadCV: "Descargar CV",
-      available: "Disponible",
+      available: "Disponible para proyectos",
+      statusAvailable: "Disponible para proyectos",
     },
-    
-    // Skills Section
     skills: {
-      title: "Habilidades Técnicas",
-      subtitle: "Mis competencias",
+      title: "Habilidades",
+      subtitle: "Tecnologías con las que trabajo",
     },
-    
-    // Projects Section
     projects: {
-      title: "Proyectos Destacados",
-      subtitle: "Mis repositorios más recientes de GitHub",
-      connectedBadge: "Conectado con GitHub",
-      viewMore: "¿Te interesa ver más proyectos?",
+      title: "Proyectos",
+      subtitle: "Lo último de GitHub",
+      viewMore: "¿Quieres ver más?",
       viewAllGitHub: "Ver todos en GitHub",
     },
-    
-    // Experience Section
     experience: {
-      title: "Experiencia Laboral",
-      subtitle: "Mi trayectoria profesional",
+      title: "Experiencia",
+      subtitle: "Trayectoria profesional",
+      jobs: [
+        {
+          title: "FullStack Developer",
+          company: "Fidens® Insurtech as a Service",
+          period: "Mar 2024 - Actualidad",
+          description: [
+            "Desarrollo de interfaces web dinámicas con Angular, diseño responsivo y buenas prácticas de componentes.",
+            "Construcción de módulos especializados para plataformas de seguros alineados con requerimientos complejos.",
+            "Automatización de procesos operativos mediante servicios Windows para aumentar eficiencia y reducir errores manuales.",
+            "Optimización de procedimientos almacenados en SQL Server para rendimiento de consultas e integridad de datos.",
+            "Diseño e integración de chatbots Chattigo para automatizar flujos de soporte al cliente.",
+          ],
+        },
+        {
+          title: "Front-End Developer",
+          company: "Prestto Solutions",
+          period: "Jun 2023 - Feb 2024",
+          description: [
+            "Creación de componentes UI dinámicos y reutilizables con React, Angular, HTML5, CSS3 y JavaScript moderno.",
+            "Integración de librerías externas y APIs REST siguiendo principios de arquitectura modular.",
+            "Traducción de prototipos de Figma a interfaces responsivas y pixel-perfect alineadas con la identidad de marca.",
+            "Optimización de UX para aplicaciones web escalables asegurando consistencia cross-browser y cross-device.",
+            "Aplicación de principios de accesibilidad WCAG para navegación inclusiva y compatible con lectores de pantalla.",
+          ],
+        },
+        {
+          title: "Back-End Developer",
+          company: "Chiquimudi S.A",
+          period: "Nov 2022 - Feb 2023",
+          description: [
+            "Diseño de diagramas UML de clases, casos de uso y secuencia para la arquitectura lógica de la plataforma.",
+            "Colaboración en el diseño de esquemas de base de datos asegurando integridad referencial y escalabilidad.",
+            "Desarrollo de APIs RESTful con Django siguiendo principios REST para comunicación frontend-backend.",
+            "Configuración de rutas y controladores manejando peticiones HTTP GET, POST, PUT, DELETE.",
+            "Integración de Auth0 para autenticación y autorización segura de usuarios.",
+          ],
+        },
+      ],
     },
-    
-    // Contact Section
     contact: {
-      title: "Contáctame",
-      subtitle: "Trabajemos juntos",
-      infoTitle: "Información de Contacto",
-      email: "Email",
-      linkedin: "LinkedIn",
-      github: "GitHub",
-      status: "Estado actual",
-      availableFreelance: "Disponible para trabajos freelance",
-      availableFulltime: "Abierto a oportunidades tiempo completo",
-      responseTime: "Tiempo de respuesta: Dentro de 24 horas",
-      otherContact: "Otras formas de contacto?",
-      whatsapp: "WhatsApp",
-      instagram: "Instagram",
-      discord: "Discord",
+      title: "Contacto",
+      subtitle: "Hablemos",
+      subject: "Asunto",
+      message: "Mensaje",
+      formTitle: "Colaboremos",
+      formSubtitle: "Cuéntame sobre tu proyecto",
+      formProgress: "Progreso",
+      submit: "Enviar mensaje",
+      sending: "Enviando...",
+      responseTime: "Tiempo de respuesta: menos de 24 horas",
+      infoTitle: "Información de contacto",
+      availableFreelance: "Disponible para freelance",
+      availableFulltime: "Abierto a tiempo completo",
     },
-    
-    // Footer
     footer: {
       rights: "Todos los derechos reservados.",
     },
   },
-  
+
   en: {
-    // Hero Section
     roles: [
-      "Software Developer",
+      "FullStack Developer",
       "Creative Developer",
-      "FullStack Engineer",
-      "Frontend Engineer",
+      "Software Engineer",
     ],
     hero: {
       greeting: "Hello, I'm",
-      name: "Edgar Delgado Scott",
-      description: "FullStack Developer with solid technical training and a deep passion for technological innovation.",
+      description: "FullStack developer with 5+ years of experience architecting and building scalable solutions across the entire stack. I specialize in turning complex requirements into clean, performant software.",
       cta: "View Projects",
+      statsYears: "Years Exp",
+      statsProjects: "Projects",
+      statsHours: "Hours Coded",
     },
-    
-    // Navigation
     nav: {
-      about: "About",
       skills: "Skills",
       projects: "Projects",
       experience: "Experience",
       contact: "Contact",
     },
-    
-    // About Section
     about: {
-      title: "About Me",
-      subtitle: "What I do",
-      description1: "I specialize in designing and developing comprehensive software solutions, with expertise in both Frontend and Backend ecosystems, applying modern and scalable architectures.",
-      description2: "I'm passionate about creating intuitive interfaces and robust systems. My approach is based on deeply understanding the logic and flow between layers, applying best practices, design patterns, and agile methodologies with the purpose of creating scalable, efficient, and user-experience-oriented products.",
-      description3: "I have experience working with technologies such as",
-      technologies: "React, Angular, Next.js, Django, .NET, Express",
-      databases: "and SQL Server and MySQL databases.",
+      title: "About",
+      subtitle: "Background",
+      para1: "I'm a FullStack Developer with a strong technical background and a deep passion for technological innovation. I specialize in architecting and developing comprehensive solutions across both Frontend and Backend ecosystems.",
+      para2: "My approach is rooted in understanding the logic and flow between layers, applying best practices, design patterns, and agile methodologies to create scalable, efficient products focused on user experience.",
+      para3: "With experience in React, Angular, Next.js, Express, Django, .NET, and both SQL and NoSQL databases, I thrive on building intuitive interfaces and robust backend systems.",
       name: "Name",
       email: "Email",
       location: "Location",
       locationValue: "Guayaquil, Ecuador",
       phone: "Phone",
       downloadCV: "Download CV",
-      available: "Available",
+      available: "Available for work",
+      statusAvailable: "Available for work",
     },
-    
-    // Skills Section
     skills: {
-      title: "Technical Skills",
-      subtitle: "My competencies",
+      title: "Skills",
+      subtitle: "Technologies I work with",
     },
-    
-    // Projects Section
     projects: {
-      title: "Featured Projects",
-      subtitle: "My latest GitHub repositories",
-      connectedBadge: "Connected to GitHub",
-      viewMore: "Interested in seeing more projects?",
+      title: "Projects",
+      subtitle: "Latest from GitHub",
+      viewMore: "Want to see more?",
       viewAllGitHub: "View all on GitHub",
     },
-    
-    // Experience Section
     experience: {
-      title: "Work Experience",
-      subtitle: "My professional journey",
+      title: "Experience",
+      subtitle: "Career timeline",
+      jobs: [
+        {
+          title: "FullStack Developer",
+          company: "Fidens® Insurtech as a Service",
+          period: "Mar 2024 - Present",
+          description: [
+            "Developed dynamic web interfaces with Angular, responsive design, and component best practices.",
+            "Built specialized modules for insurance platforms aligned with complex functional requirements.",
+            "Automated operational processes via Windows services to increase efficiency and reduce manual errors.",
+            "Optimized SQL Server stored procedures for query performance and data integrity.",
+            "Designed and integrated Chattigo chatbots to automate customer support workflows.",
+          ],
+        },
+        {
+          title: "Front-End Developer",
+          company: "Prestto Solutions",
+          period: "Jun 2023 - Feb 2024",
+          description: [
+            "Built dynamic, reusable UI components with React, Angular, HTML5, CSS3, and modern JavaScript.",
+            "Integrated third-party libraries and REST APIs following modular architecture best practices.",
+            "Translated Figma prototypes into pixel-perfect, responsive interfaces aligned with brand identity.",
+            "Optimized UX for scalable web applications ensuring cross-browser and cross-device consistency.",
+            "Applied WCAG accessibility principles for inclusive, screen-reader-friendly navigation.",
+          ],
+        },
+        {
+          title: "Back-End Developer",
+          company: "Chiquimudi S.A",
+          period: "Nov 2022 - Feb 2023",
+          description: [
+            "Designed UML class, use-case, and sequence diagrams for logical platform architecture.",
+            "Collaborated on database schema design ensuring referential integrity and scalability.",
+            "Developed RESTful APIs with Django following RESTful principles for frontend-backend communication.",
+            "Configured routes and controllers handling GET, POST, PUT, DELETE HTTP requests.",
+            "Integrated Auth0 for secure user authentication and authorization.",
+          ],
+        },
+      ],
     },
-    
-    // Contact Section
     contact: {
-      title: "Contact Me",
-      subtitle: "Let's work together",
+      title: "Contact",
+      subtitle: "Get in touch",
+      subject: "Subject",
+      message: "Message",
+      formTitle: "Let's Collaborate",
+      formSubtitle: "Tell me about your project",
+      formProgress: "Form progress",
+      submit: "Send message",
+      sending: "Sending...",
+      responseTime: "Average response time: under 24 hours",
       infoTitle: "Contact Information",
-      email: "Email",
-      linkedin: "LinkedIn",
-      github: "GitHub",
-      status: "Current Status",
       availableFreelance: "Available for freelance work",
       availableFulltime: "Open to full-time opportunities",
-      responseTime: "Response time: Within 24 hours",
-      otherContact: "Other ways to contact?",
-      whatsapp: "WhatsApp",
-      instagram: "Instagram",
-      discord: "Discord",
     },
-    
-    // Footer
     footer: {
       rights: "All rights reserved.",
     },
@@ -175,4 +215,4 @@ export const translations = {
 }
 
 export type Language = keyof typeof translations
-export type TranslationKeys = typeof translations.es
+export type TranslationKeys = typeof translations.en

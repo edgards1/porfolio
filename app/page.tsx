@@ -3,464 +3,342 @@
 import Link from "next/link"
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowRight, Github, Linkedin, Mail, Twitter, Code2 } from "lucide-react"
+import { ArrowRight, Github, Linkedin, Mail, Terminal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { ProjectCard } from "@/components/project-card"
-import { SkillBadge } from "@/components/skill-badge"
+import { SkillsBento } from "@/components/skills-bento"
 import { Timeline } from "@/components/timeline"
 import { ContactSection } from "@/components/contact-section"
-import { CreativeHero } from "@/components/creative-hero"
 import { FloatingNav } from "@/components/floating-nav"
-import { MouseFollower } from "@/components/mouse-follower"
-import { ScrollProgress } from "@/components/scroll-progress"
 import { SectionHeading } from "@/components/section-heading"
-import { GlassmorphicCard } from "@/components/glassmorphic-card"
-import { ContactIcon } from "@/components/contact-icon"
 import { GitHubProjects } from "@/components/services/github-proyects"
 import { Typewriter } from "@/components/typewriter"
 import { CvModal } from "@/components/cv-modal"
+import { useLanguage } from "@/contexts/language-context"
+
+const techLogos = [
+  { name: "JS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+  { name: "TS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { name: "Angular", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" },
+  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "C#", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
+  { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+  { name: "NodeJS", icon: "https://www.myqnap.org/wp-content/uploads/nodejs-logo.gif" },
+  { name: "Django", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
+  { name: ".NET", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg" },
+  { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" },
+  { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+  { name: "Next", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+  { name: ".NET", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg" },
+  { name: "FastAPI", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" },
+]
+
+const socialLinks = [
+  { icon: Github, href: "https://github.com/edgards1", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/edgard-s1", label: "LinkedIn" },
+  { icon: Mail, href: "mailto:edgar_delgado_scott@hotmail.com", label: "Email" },
+]
 
 export default function Portfolio() {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false)
+  const { t } = useLanguage()
+
+  const infoFields: [string, string][] = [
+    [t.about.name, "Edgar Eduardo Delgado Scott"],
+    [t.about.email, "edgar_delgado_scott@hotmail.com"],
+    [t.about.location, t.about.locationValue],
+    [t.about.phone, "0995658194"],
+  ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-900 to-black text-white overflow-hidden">
-      <MouseFollower />
-      <ScrollProgress />
+    <div className="min-h-screen bg-[#09090B] text-[#FAFAFA]">
       <FloatingNav />
 
-      {/* Hero Section */}
-      <motion.section className="relative h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-amber-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-teal-professional-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+      {/* ─── HERO ─── */}
+      <section className="relative min-h-[100dvh] flex items-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-cyan-500/3 rounded-full blur-[100px]" />
         </div>
 
-        <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-10">
-          <div className="space-y-6 text-center lg:text-left">
-            <div className="inline-block">
-              <div className="relative px-3 py-1 text-sm font-medium rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4">
-              {/* Animated Badge */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6 }}
-                className="inline-block"
-              >
-                <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-deep-600 via-teal-professional-500 to-amber-accent-500 rounded-full blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
-                  <div className="relative px-6 py-2.5 bg-zinc-900/90 backdrop-blur-xl rounded-full border border-white/10 flex items-center gap-3">
-                    <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                      <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse animation-delay-200"></span>
-                      <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse animation-delay-400"></span>
-                    </div>
-                    <span className="text-sm font-medium bg-gradient-to-r from-blue-deep-400 via-teal-professional-400 to-amber-accent-400 bg-clip-text text-transparent">
-                      <Typewriter
-                        texts={["Software Developer", "Creative Developer", "FullStack Developer"]}
-                        speed={80}
-                        deleteSpeed={40}
-                        pauseDuration={2000}
-                        loop={true}
-                        mode="single"
-                        cursor={true}
-                        cursorChar="|"
-                      />
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-deep-500/20 to-teal-professional-500/20 animate-pulse"></span>
-              </div>
-            </div>
-            <motion.h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              >
-              <span className="block">Hola, soy</span>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-deep-400 to-teal-professional-500">
-                Edgar Eduardo Delgado Scott
-              </span>
-            </motion.h1>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <p className="text-lg sm:text-xl text-zinc-400 max-w-[600px] mx-auto lg:mx-0">
-                Desarrollador <Code2 className="w-5 h-5 inline" /> FullStack con +5 años de experiencia, sólida formación técnica y una profunda vocación por la innovación
-                tecnológica. Me especializo en la arquitectura y desarrollo de soluciones integrales.
-              </p>
-            </motion.div>
-            <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-4 justify-center lg:justify-start">
+        <div className="container max-w-7xl mx-auto relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-20">
+            <div className="lg:col-span-7 space-y-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="w-full sm:w-auto flex justify-center lg:justify-start"
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                <Link href="#projects">
-                  <Button className="relative overflow-hidden group bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 border-0 text-white hover:from-teal-professional-600 hover:to-blue-deep-600">
-                    <span className="relative z-10 flex items-center">
-                      Ver Proyectos{" "}
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </span>
-                    <span className="absolute inset-0 bg-gradient-to-r from-teal-professional-600 to-blue-deep-600 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                  </Button>
-                </Link>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-xs font-mono uppercase tracking-wider">
+                  <Terminal className="h-3.5 w-3.5" />
+                  <Typewriter
+                    texts={t.roles}
+                    speed={70}
+                    deleteSpeed={35}
+                    pauseDuration={2000}
+                    loop={true}
+                    mode="single"
+                    cursor={true}
+                    cursorChar="_"
+                  />
+                </div>
               </motion.div>
 
-              <div className="flex gap-4 justify-center lg:justify-start">
-                <Link href="https://github.com/edgards1" target="_blank" rel="noopener noreferrer">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full bg-zinc-800/50 hover:bg-zinc-800 text-zinc-400 hover:text-white"
-                  >
-                    <Github className="h-5 w-5" />
-                    <span className="sr-only">GitHub</span>
+              <motion.div
+                className="space-y-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+              >
+                <p className="text-sm sm:text-base font-mono text-[#52525B] uppercase tracking-[0.2em]">
+                  {t.hero.greeting}
+                </p>
+                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display uppercase tracking-tight text-[#FAFAFA]">
+                  Edgar
+                  <br />
+                  Delgado
+                  <br />
+                  Scott
+                </h1>
+              </motion.div>
+
+              <motion.p
+                className="text-base sm:text-lg text-[#A1A1AA] max-w-[540px] leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                {t.hero.description}
+              </motion.p>
+
+              <motion.div
+                className="flex gap-8 sm:gap-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                {[
+                  { value: "5+", label: t.hero.statsYears },
+                  { value: "4+", label: t.hero.statsProjects },
+                  { value: "8K+", label: t.hero.statsHours },
+                ].map((stat) => (
+                  <div key={stat.label} className="text-center sm:text-left">
+                    <div className="text-2xl sm:text-3xl font-display text-cyan-400">{stat.value}</div>
+                    <div className="text-xs font-mono text-[#52525B] uppercase tracking-wider mt-0.5">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+
+              <motion.div
+                className="flex flex-wrap items-center gap-3 pt-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
+                <Link href="#projects">
+                  <Button className="bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20 h-11 px-4 rounded-full text-sm font-medium transition-all duration-200">
+                    {t.hero.cta}
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <Link href="https://www.linkedin.com/in/edgard-s1" target="_blank" rel="noopener noreferrer">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full bg-zinc-800/50 hover:bg-zinc-800 text-zinc-400 hover:text-white"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                    <span className="sr-only">LinkedIn</span>
-                  </Button>
-                </Link>
-                <Link href="mailto:edgar_delgado_scott@hotmail.com">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full bg-zinc-800/50 hover:bg-zinc-800 text-zinc-400 hover:text-white"
-                  >
-                    <Mail className="h-5 w-5" />
-                    <span className="sr-only">Email</span>
-                  </Button>
-                </Link>
-              </div>
+
+                {socialLinks.map(({ icon: Icon, href, label }) => (
+                  <Link key={label} href={href} target="_blank" rel="noopener noreferrer">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-full w-11 h-11 border border-[#27272A] text-[#A1A1AA] hover:text-[#FAFAFA] hover:border-cyan-500/30 hover:bg-[#18181B] transition-all duration-200"
+                    >
+                      <Icon className="h-4 w-4" />
+                      <span className="sr-only">{label}</span>
+                    </Button>
+                  </Link>
+                ))}
+              </motion.div>
             </div>
+
+            <motion.div
+              className="lg:col-span-5 md:d-none *: hidden lg:block"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <div className="grid grid-cols-4 gap-3">
+                {techLogos.map((tech, i) => (
+                  <motion.div
+                    key={tech.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 + i * 0.04 }}
+                    className="group aspect-square rounded-lg border border-[#27272A] bg-[#18181B] flex flex-col items-center justify-center gap-1 hover:border-cyan-500/40 hover:bg-cyan-500/5 transition-all duration-300"
+                  >
+                    <img
+                      src={tech.icon}
+                      alt={tech.name}
+                      className="w-7 h-7 sm:w-8 sm:h-8 object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-200"
+                    />
+                    <span className="text-[9px] font-mono text-[#52525B] group-hover:text-cyan-400 transition-colors duration-200">
+                      {tech.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           </div>
-            <div className="md:absolute bottom-[10%] right-[4%] flex md:flex-col gap-4 md:gap-8 text-center md:text-right">
+
+          <motion.div
+            className="absolute bottom-8 left-1/2 -translate-x-1/2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+          >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="space-y-2"
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-5 h-8 rounded-full border border-[#27272A] flex justify-center pt-2"
             >
-              <div className="text-4xl font-bold bg-gradient-to-r from-blue-deep-400 to-teal-professional-500 bg-clip-text text-transparent">
-              5+
-              </div>
-              <p className="text-sm text-zinc-400">Años de Experiencia</p>
+              <div className="w-1 h-1.5 rounded-full bg-[#52525B]" />
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
 
+      {/* ─── ABOUT ─── */}
+      <section id="about" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
+        <div className="container max-w-7xl mx-auto">
+          <SectionHeading title={t.about.title} subtitle={t.about.subtitle} />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mt-12 sm:mt-16">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              className="relative"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="space-y-2"
             >
-              <div className="text-4xl font-bold bg-gradient-to-r from-amber-accent-400 to-teal-professional-500 bg-clip-text text-transparent">
-              4+
-              </div>
-              <p className="text-sm text-zinc-400">Proyectos Freelance Finalizados</p>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-              className="space-y-2"
-            >
-              <div className="text-4xl font-bold bg-gradient-to-r from-amber-accent-400 to-teal-professional-500 bg-clip-text text-transparent">
-              8K+
-              </div>
-              <p className="text-sm text-zinc-400">Horas Trabajadas</p>
-            </motion.div>
-            </div>
-        </div>
-
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center items-start p-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse"></div>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Modal CV */}
-      <CvModal
-        isOpen={isResumeModalOpen}
-        onClose={() => setIsResumeModalOpen(false)}
-      />
-
-      {/* About Section */}
-      <motion.section 
-        id="about" 
-        className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/3 left-1/3 w-64 h-64 bg-teal-professional-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-        </div>
-
-        <div className="container relative z-10 max-w-7xl mx-auto">
-          <SectionHeading title="Sobre mi" subtitle="Mi trayectoria" />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center mt-12 sm:mt-16">
-            <div className="relative">
-              <div className="absolute -inset-4 rounded-xl bg-gradient-to-r from-blue-deep-500/20 to-teal-professional-500/20 blur-xl opacity-70"></div>
-              <div className="relative aspect-square rounded-xl overflow-hidden border border-zinc-800">
+              <div className="aspect-square rounded-lg overflow-hidden border border-[#27272A]">
                 <img
                   src="/img/perfil.jpg"
                   alt="Edgar Delgado Scott"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 w-full p-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#09090B]/80 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 w-full p-5">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="text-sm font-medium">Disponible</span>
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-xs font-mono text-green-400">{t.about.statusAvailable}</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="space-y-6">
-              <GlassmorphicCard>
-                <p className="text-base sm:text-lg text-zinc-300">
-                  Soy un Desarrollador FullStack con sólida formación técnica y una profunda vocación por la innovación
-                  tecnológica. Me especializo en la arquitectura y desarrollo de soluciones integrales, dominando tanto
-                  el ecosistema Frontend como Backend.
-                </p>
-                <p className="text-base sm:text-lg text-zinc-300 mt-4">
-                  Mi enfoque se basa en comprender a fondo la lógica y el flujo entre capas, aplicando buenas prácticas,
-                  patrones de diseño y metodologías ágiles, con el propósito de crear productos escalables, eficientes y
-                  orientados a la experiencia del usuario.
-                </p>
-                <p className="text-base sm:text-lg text-zinc-300 mt-4">
-                  Tengo experiencia trabajando con tecnologías como React, Angular, Nextjs, Express, Django, .NET, y bases de datos SQL y NoSQL. Me apasiona crear interfaces intuitivas y sistemas robustos.
-                </p>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="space-y-5"
+            >
+              <p className="text-[#A1A1AA] leading-relaxed">{t.about.para1}</p>
+              <p className="text-[#A1A1AA] leading-relaxed">{t.about.para2}</p>
+              <p className="text-[#A1A1AA] leading-relaxed">{t.about.para3}</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-                  <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Nombre</div>
-                    <p className="font-medium">Edgar Eduardo Delgado Scott</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
+                {infoFields.map(([label, value]) => (
+                  <div key={label} className="border border-[#27272A] rounded-lg px-4 py-3">
+                    <p className="text-xs font-mono uppercase tracking-wider text-[#52525B]">{label}</p>
+                    <p className="text-sm text-[#A1A1AA] mt-0.5">{value}</p>
                   </div>
-                  <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Email</div>
-                    <p className="font-medium">edgar_delgado_scott@hotmail.com</p>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Ubicación</div>
-                    <p className="font-medium">Guayaquil, Ecuador</p>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-sm text-zinc-500">Teléfono</div>
-                    <p className="font-medium">0995658194</p>
-                  </div>
-                </div>
+                ))}
+              </div>
 
-                <div className="mt-8">
-                  <Button 
-                    onClick={() => setIsResumeModalOpen(true)}
-                    className="w-full sm:w-auto bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 hover:from-teal-professional-600 hover:to-blue-deep-600 text-white border-0"
-                  >
-                    Descargar CV
-                  </Button>
-                </div>
-              </GlassmorphicCard>
-            </div>
+              <Button
+                onClick={() => setIsResumeModalOpen(true)}
+                className="bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20 text-sm font-medium transition-all duration-200"
+              >
+                {t.about.downloadCV}
+              </Button>
+            </motion.div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Skills Section */}
-      <motion.section 
-        id="skills" 
-        className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-blue-deep-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+      {/* ─── SKILLS ─── */}
+      <section id="skills" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-[#0c0c0e]">
+        <div className="container max-w-7xl mx-auto">
+          <SectionHeading title={t.skills.title} subtitle={t.skills.subtitle} />
+          <div className="mt-12 sm:mt-16">
+            <SkillsBento />
+          </div>
         </div>
+      </section>
 
-        <div className="container relative z-10 max-w-7xl mx-auto">
-          <SectionHeading title="My Skills" subtitle="Tecnologías en las que me desempeño" />
-
+      {/* ─── PROJECTS ─── */}
+      <section id="projects" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
+        <div className="container max-w-7xl mx-auto">
+          <SectionHeading title={t.projects.title} subtitle={t.projects.subtitle} />
+          <div className="mt-12 sm:mt-16">
+            <GitHubProjects />
+          </div>
           <motion.div
-            className="mt-12 sm:mt-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
-              {[
-                { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-                { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-                { name: "Angular", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" },
-                { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-                { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-                { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-                { name: "Bootstrap", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" },
-                { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
-                { name: "C#", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
-                { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-                { name: ".NET", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg" },
-                { name: "Django", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
-                { name: "Flask", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" },
-                { name: "NodeJS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-                { name: "Express", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
-                { name: "SQL Server", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" },
-                { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-                { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-                { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-              ].map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  className="group relative"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.2, delay: index * 0.03 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.1, y: -5 }}
-                >
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-lg bg-zinc-800/30 backdrop-blur-sm border border-zinc-700/50 group-hover:border-blue-deep-500/50 group-hover:bg-zinc-800/50 transition-all duration-300">
-                    <img 
-                      src={skill.icon} 
-                      alt={skill.name}
-                      className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
-                    />
-                  </div>
-                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                    <span className="text-xs font-medium text-zinc-400 whitespace-nowrap bg-zinc-800 px-2 py-1 rounded">
-                      {skill.name}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Projects Section */}
-      <motion.section 
-        id="projects" 
-        className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-teal-professional-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-amber-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-        </div>
-      
-        <div className="container relative z-10 max-w-7xl mx-auto">
-          <SectionHeading title="Proyectos Destacados" subtitle="Mis repositorios más recientes de GitHub" />
-          
-          {/* Badge indicando conexión con GitHub */}
-          <motion.div
-            className="flex justify-center mb-8 mt-12 sm:mt-16"
+            className="text-center mt-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-sm text-zinc-300">Conectado con GitHub</span>
-              <Github className="h-4 w-4 text-zinc-400" />
-            </div>
-          </motion.div>
-      
-          <GitHubProjects />
-          
-          {/* Call to action para ver más */}
-          <motion.div
-            className="text-center mt-12 sm:mt-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-zinc-400 mb-4">¿Te interesa ver más proyectos?</p>
-            <Button
-              variant="outline"
-              className="border-zinc-600 text-zinc-300 hover:bg-zinc-800 hover:text-white"
-              asChild
-            >
-              <Link 
-                href="https://github.com/edgards1" 
-                target="_blank" 
-                rel="noopener noreferrer"
+            <p className="text-sm text-[#52525B] mb-3">{t.projects.viewMore}</p>
+            <Link href="https://github.com/edgards1" target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="outline"
+                className="border-[#27272A] text-[#A1A1AA] hover:bg-[#18181B] hover:text-[#FAFAFA] hover:border-cyan-500/30 rounded-full transition-all duration-200"
               >
                 <Github className="h-4 w-4 mr-2" />
-                Ver todos en GitHub
-              </Link>
-            </Button>
+                {t.projects.viewAllGitHub}
+              </Button>
+            </Link>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Experience Section */}
-      <motion.section 
-        id="experience" 
-        className="relative py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-8"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-blue-deep-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-          <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-blue-deep-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-        </div>
-
-        <div className="container relative z-10 max-w-7xl mx-auto">
-          <SectionHeading title="Experiencia Laboral" subtitle="Mi trayectoria profesional" />
-          <div className="mt-12 sm:mt-16">
+      {/* ─── EXPERIENCE ─── */}
+      <section id="experience" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-[#0c0c0e]">
+        <div className="container max-w-7xl mx-auto">
+          <SectionHeading title={t.experience.title} subtitle={t.experience.subtitle} />
+          <div className="mt-12 sm:mt-16 max-w-3xl mx-auto">
             <Timeline />
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Contact Section */}
+      {/* ─── CONTACT ─── */}
       <ContactSection />
 
-      {/* Footer */}
-      <footer className="border-t border-zinc-800 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="container max-w-7xl mx-auto flex flex-col md:flex-row justify-center items-center gap-6">
-          <div className="text-center md:text-left">
-            <p className="text-sm text-zinc-500">
-              © {new Date().getFullYear()} Edgar Eduardo Delgado Scott. Todos los derechos reservados.
+      {/* ─── FOOTER ─── */}
+      <footer className="border-t border-[#27272A] py-8 px-4 sm:px-6 lg:px-8">
+        <div className="container max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-[#52525B] font-mono">
+              <span className="text-cyan-400">&gt;</span> &copy; {new Date().getFullYear()} Edgar Delgado Scott
             </p>
+            <div className="flex items-center gap-4">
+              {socialLinks.map(({ icon: Icon, href, label }) => (
+                <Link key={label} href={href} target="_blank" rel="noopener noreferrer">
+                  <span className="text-[#52525B] hover:text-cyan-400 transition-colors">
+                    <Icon className="h-4 w-4" />
+                    <span className="sr-only">{label}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </footer>
+
+      <CvModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
     </div>
   )
 }

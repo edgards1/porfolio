@@ -1,46 +1,21 @@
 "use client"
 
-import { motion } from "framer-motion"
-
 interface SectionHeadingProps {
   title: string
-  subtitle: string
+  subtitle?: string
 }
 
 export function SectionHeading({ title, subtitle }: SectionHeadingProps) {
   return (
-    <div className="text-center space-y-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-      >
-        <div className="inline-block">
-          <div className="relative px-3 py-1 text-sm font-mono font-medium rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-2">
-            <span className="relative z-10 text-zinc-400">{subtitle}</span>
-            <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-deep-500/20 to-teal-professional-500/20 animate-pulse"></span>
-          </div>
-        </div>
-      </motion.div>
-
-      <motion.h2
-        className="text-4xl md:text-5xl font-mono font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-deep-400 to-teal-professional-400 tracking-tight"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        viewport={{ once: true }}
-      >
+    <div className="text-center space-y-3">
+      {subtitle && (
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#52525B]">
+          {subtitle}
+        </p>
+      )}
+      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display uppercase tracking-tight text-[#FAFAFA]">
         {title}
-      </motion.h2>
-
-      <motion.div
-        className="w-24 h-1.5 bg-gradient-to-r from-blue-deep-600 to-teal-professional-600 rounded-full mx-auto mt-6"
-        initial={{ opacity: 0, scale: 0 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        viewport={{ once: true }}
-      />
+      </h2>
     </div>
   )
 }

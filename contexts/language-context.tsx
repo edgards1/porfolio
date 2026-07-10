@@ -12,19 +12,12 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('es')
+  const [language, setLanguageState] = useState<Language>('en')
 
   useEffect(() => {
-    // Detect browser language on mount
-    const browserLang = navigator.language.toLowerCase()
     const savedLang = localStorage.getItem('preferred-language') as Language
-    
-    if (savedLang && (savedLang === 'es' || savedLang === 'en')) {
+    if (savedLang === 'es' || savedLang === 'en') {
       setLanguageState(savedLang)
-    } else if (browserLang.startsWith('es')) {
-      setLanguageState('es')
-    } else {
-      setLanguageState('en')
     }
   }, [])
 

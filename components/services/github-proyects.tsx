@@ -94,12 +94,12 @@ function transformRepoToProject(repo: GitHubRepo): ProjectData {
   const enhancement = repoEnhancements[repo.name] || {}
   
   // Generar tags basados en el lenguaje, topics y palabras clave
-  const tags = [
-    repo.language && repo.language,
+  const tags: string[] = [
+    repo.language || "",
     ...repo.topics,
     ...getTagsFromDescription(repo.description || ""),
     ...getTagsFromName(repo.name)
-  ].filter(Boolean).slice(0, 6) // Limitar a 6 tags
+  ].filter((x): x is string => !!x).slice(0, 6)
 
   return {
     title: enhancement.title || formatRepoName(repo.name),
@@ -209,8 +209,8 @@ export function GitHubProjects() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-blue-deep-500" />
-          <p className="text-zinc-400">Cargando proyectos desde GitHub...</p>
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-cyan-400" />
+          <p className="text-[#A1A1AA]">Loading projects from GitHub...</p>
         </div>
       </div>
     )
@@ -228,7 +228,7 @@ export function GitHubProjects() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {projects.map((project, index) => (
         <motion.div
           key={project.repoUrl}

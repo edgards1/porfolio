@@ -7,6 +7,8 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:email": "tsx scripts/test-email.ts"
   },
   "dependencies": {
@@ -24,13 +26,18 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.3",
     "dotenv": "^17.4.2",
+    "jsdom": "^29.1.1",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.23.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }

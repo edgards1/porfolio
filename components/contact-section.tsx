@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react"
+import { useState, useRef, useCallback, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Send, CheckCircle, AlertCircle, User, Mail, MessageSquare, FileText, ArrowRight, Linkedin, Github } from "lucide-react"
+import { Send, CheckCircle, AlertCircle, User, Mail, MessageSquare, FileText, ArrowRight, Linkedin, Github, Check } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils"
 import { GlassmorphicCard } from "@/components/glassmorphic-card"
 import { SectionHeading } from "@/components/section-heading"
 import { useLanguage } from "@/contexts/language-context"
+import { validateField, validateForm, isFormValid, getFirstErrorField } from "@/lib/validation"
+import { CharacterCount } from "@/components/ui/character-count"
 
 interface FormData {
   name: string
@@ -27,18 +29,22 @@ interface FormErrors {
   message?: string
 }
 
+type FormStatus = "idle" | "submitting" | "success" | "error"
+
 const FormField = ({
   label,
   icon,
   children,
   error,
   success,
+  disabled,
 }: {
   label: string
   icon: React.ReactNode
   children: React.ReactNode
   error?: string
   success?: boolean
+  disabled?: boolean
 }) => (
   <motion.div
     className="space-y-1.5"
@@ -71,10 +77,139 @@ const FormField = ({
   </motion.div>
 )
 
+function SubmitButton({
+  isSubmitting,
+  isDisabled,
+  label,
+  sendingLabel,
+  progressPercentage,
+}: {
+  isSubmitting: boolean
+  isDisabled: boolean
+  label: string
+  sendingLabel: string
+  progressPercentage: number
+}) {
+  return (
+    <div className="space-y-2">
+      <Button
+        type="submit"
+        disabled={isSubmitting || isDisabled}
+        className={cn(
+          "w-full h-11 text-sm font-medium transition-all duration-200 relative overflow-hidden",
+          "bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20",
+          !isSubmitting && !isDisabled && "shadow-[0_0_12px_rgba(6,182,212,0.15)]",
+          isDisabled && !isSubmitting && "opacity-50 cursor-not-allowed hover:bg-cyan-500/10"
+        )}
+      >
+        <AnimatePresence mode="wait">
+          {isSubmitting ? (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex items-center"
+            >
+              <div className="w-4 h-4 mr-2 border-2 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
+              {sendingLabel}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="send"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex items-center"
+            >
+              {label}
+              <Send className="ml-2 h-4 w-4" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Button>
+      <AnimatePresence>
+        {isDisabled && !isSubmitting && (
+          <motion.p
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            className="text-xs text-center text-[#52525B]"
+          >
+            Complete all fields to send the message
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function SuccessState({ name, onReset }: { name: string; onReset: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="flex flex-col items-center justify-center py-12 px-6 text-center"
+    >
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.15, type: "spring", stiffness: 200, damping: 15 }}
+        className="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mb-6"
+      >
+        <Check className="h-8 w-8 text-cyan-400" />
+      </motion.div>
+
+      <motion.h3
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="text-lg font-semibold text-[#FAFAFA] mb-2"
+      >
+        Message sent successfully!
+      </motion.h3>
+
+      <motion.p
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="text-sm text-[#A1A1AA] max-w-sm"
+      >
+        Thank you, {name}. I will review your message and get back to you within 24 hours.
+      </motion.p>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-8 w-48 h-1 bg-[#27272A] rounded-full overflow-hidden"
+      >
+        <motion.div
+          className="h-full bg-cyan-500 rounded-full"
+          initial={{ width: "100%" }}
+          animate={{ width: "0%" }}
+          transition={{ duration: 4, ease: "linear" }}
+          onAnimationComplete={onReset}
+        />
+      </motion.div>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.7 }}
+        className="text-xs text-[#52525B] mt-2"
+      >
+        Resetting form...
+      </motion.p>
+    </motion.div>
+  )
+}
+
 export function ContactSection() {
   const { toast } = useToast()
   const { t } = useLanguage()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formStatus, setFormStatus] = useState<FormStatus>("idle")
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -83,76 +218,88 @@ export function ContactSection() {
   })
   const [errors, setErrors] = useState<FormErrors>({})
   const [touchedFields, setTouchedFields] = useState<Set<keyof FormData>>(new Set())
+  const [shakeKey, setShakeKey] = useState(0)
   const formRef = useRef<HTMLFormElement>(null)
+  const inputRefs = useRef<Record<string, HTMLInputElement | HTMLTextAreaElement | null>>({
+    name: null,
+    email: null,
+    subject: null,
+    message: null,
+  })
+  const debounceTimers = useRef<Record<string, ReturnType<typeof setTimeout> | null>>({})
 
-  const validateField = useCallback((field: keyof FormData, value: string): string | undefined => {
-    switch (field) {
-      case "name":
-        if (!value.trim()) return "Name is required"
-        if (value.trim().length < 2) return "Name must be at least 2 characters"
-        if (value.trim().length > 50) return "Name cannot exceed 50 characters"
-        return undefined
-      case "email":
-        if (!value.trim()) return "Email is required"
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return "Enter a valid email"
-        return undefined
-      case "subject":
-        if (!value.trim()) return "Subject is required"
-        if (value.trim().length < 5) return "Subject must be at least 5 characters"
-        if (value.trim().length > 100) return "Subject cannot exceed 100 characters"
-        return undefined
-      case "message":
-        if (!value.trim()) return "Message is required"
-        if (value.trim().length < 10) return "Message must be at least 10 characters"
-        if (value.trim().length > 1000) return "Message cannot exceed 1000 characters"
-        return undefined
-      default:
-        return undefined
-    }
+  const setInputRef = useCallback((field: keyof FormData) => (el: HTMLInputElement | HTMLTextAreaElement | null) => {
+    inputRefs.current[field] = el
+  }, [])
+
+  const validateFieldFn = useCallback((field: keyof FormData, value: string): string | undefined => {
+    return validateField(field, value)
   }, [])
 
   const handleInputChange = useCallback((field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
+
     if (touchedFields.has(field)) {
-      const error = validateField(field, value)
-      setErrors((prev) => ({ ...prev, [field]: error }))
+      if (debounceTimers.current[field]) {
+        clearTimeout(debounceTimers.current[field]!)
+      }
+      debounceTimers.current[field] = setTimeout(() => {
+        const error = validateFieldFn(field, value)
+        setErrors((prev) => ({ ...prev, [field]: error }))
+      }, 300)
     }
-  }, [touchedFields, validateField])
+  }, [touchedFields, validateFieldFn])
+
+  useEffect(() => {
+    return () => {
+      Object.values(debounceTimers.current).forEach((timer) => {
+        if (timer) clearTimeout(timer)
+      })
+    }
+  }, [])
 
   const handleBlur = useCallback((field: keyof FormData) => {
     setTouchedFields((prev) => new Set([...prev, field]))
-    const error = validateField(field, formData[field])
+    const error = validateFieldFn(field, formData[field])
     setErrors((prev) => ({ ...prev, [field]: error }))
-  }, [formData, validateField])
+  }, [formData, validateFieldFn])
 
-  const validateForm = useCallback((): boolean => {
-    const newErrors: FormErrors = {}
-    let isValid = true
-    Object.keys(formData).forEach((key) => {
-      const field = key as keyof FormData
-      const error = validateField(field, formData[field])
-      if (error) {
-        newErrors[field] = error
-        isValid = false
-      }
-    })
+  const validateFormFn = useCallback((): boolean => {
+    const newErrors = validateForm(formData)
     setErrors(newErrors)
     setTouchedFields(new Set(Object.keys(formData) as (keyof FormData)[]))
-    return isValid
-  }, [formData, validateField])
+    return isFormValid(newErrors)
+  }, [formData])
+
+  const focusFirstError = useCallback(() => {
+    const firstErrorField = getFirstErrorField(errors)
+    if (firstErrorField && inputRefs.current[firstErrorField]) {
+      inputRefs.current[firstErrorField]?.focus()
+    }
+  }, [errors])
+
+  const resetForm = useCallback(() => {
+    setFormData({ name: "", email: "", subject: "", message: "" })
+    setErrors({})
+    setTouchedFields(new Set())
+    setFormStatus("idle")
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!validateForm()) {
+
+    if (!validateFormFn()) {
+      setShakeKey((k) => k + 1)
       toast({
         title: "Form errors",
         description: "Please fix the errors before submitting.",
         variant: "destructive",
       })
+      setTimeout(() => focusFirstError(), 100)
       return
     }
 
-    setIsSubmitting(true)
+    setFormStatus("submitting")
 
     try {
       const response = await fetch("/api/contact", {
@@ -165,29 +312,28 @@ export function ContactSection() {
 
       if (!response.ok) throw new Error(data.error || "Error sending message")
 
+      setFormStatus("success")
       toast({
         title: "Message sent successfully!",
         description: data.message || "Thank you for reaching out. I'll respond shortly.",
       })
-
-      setTimeout(() => {
-        setFormData({ name: "", email: "", subject: "", message: "" })
-        setTouchedFields(new Set())
-        setErrors({})
-      }, 3000)
     } catch (error) {
+      setFormStatus("error")
       toast({
         title: "Error sending message",
         description: error instanceof Error ? error.message : "Unknown error",
         variant: "destructive",
       })
-    } finally {
-      setIsSubmitting(false)
+      setFormStatus("idle")
     }
   }
 
   const isFieldValid = (field: keyof FormData): boolean =>
     !!touchedFields.has(field) && !errors[field] && formData[field].trim().length > 0
+
+  const allFieldsFilled = Object.values(formData).every((v) => v.trim().length > 0)
+  const noErrors = isFormValid(errors)
+  const canSubmit = allFieldsFilled && noErrors
 
   const progressPercentage = Object.keys(formData).reduce((acc, key) => {
     const field = key as keyof FormData
@@ -277,145 +423,172 @@ export function ContactSection() {
             viewport={{ once: true }}
           >
             <GlassmorphicCard className="p-6">
-              <div className="mb-6 text-center">
-                <h3 className="text-lg font-semibold text-[#FAFAFA] mb-1">{t.contact.formTitle}</h3>
-                <p className="text-sm text-[#A1A1AA]">{t.contact.formSubtitle}</p>
-              </div>
-
-              <div className="mb-5">
-                <div className="flex justify-between items-center mb-1.5">
-                    <span className="text-xs font-mono text-[#52525B]">{t.contact.formProgress}</span>
-                  <span className="text-xs font-mono text-[#52525B]">{progressPercentage}%</span>
-                </div>
-                <div className="w-full bg-[#27272A] rounded-full h-1">
+              <AnimatePresence mode="wait">
+                {formStatus === "success" ? (
+                  <SuccessState
+                    key="success"
+                    name={formData.name}
+                    onReset={resetForm}
+                  />
+                ) : (
                   <motion.div
-                    className="bg-cyan-500 h-1 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${progressPercentage}%` }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-              </div>
+                    key="form"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <div className="mb-6 text-center">
+                      <h3 className="text-lg font-semibold text-[#FAFAFA] mb-1">{t.contact.formTitle}</h3>
+                      <p className="text-sm text-[#A1A1AA]">{t.contact.formSubtitle}</p>
+                    </div>
 
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-                <FormField
-                  label={t.about.name}
-                  icon={<User className="h-3 w-3" />}
-                  error={touchedFields.has("name") ? errors.name : undefined}
-                  success={isFieldValid("name")}
-                >
-                  <Input
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                    onBlur={() => handleBlur("name")}
-                    placeholder="Your full name"
-                    className={cn(
-                      "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 text-sm",
-                      errors.name && touchedFields.has("name") && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
-                      isFieldValid("name") && "border-cyan-500/50"
-                    )}
-                    disabled={isSubmitting}
-                  />
-                </FormField>
+                    <div className="mb-5">
+                      <div className="flex justify-between items-center mb-1.5">
+                          <span className="text-xs font-mono text-[#52525B]">{t.contact.formProgress}</span>
+                        <span className="text-xs font-mono text-[#52525B]">{progressPercentage}%</span>
+                      </div>
+                      <div className="w-full bg-[#27272A] rounded-full h-1">
+                        <motion.div
+                          className="bg-cyan-500 h-1 rounded-full"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${progressPercentage}%` }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      </div>
+                    </div>
 
-                <FormField
-                  label={t.contact.email}
-                  icon={<Mail className="h-3 w-3" />}
-                  error={touchedFields.has("email") ? errors.email : undefined}
-                  success={isFieldValid("email")}
-                >
-                  <Input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    onBlur={() => handleBlur("email")}
-                    placeholder="you@email.com"
-                    className={cn(
-                      "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 text-sm",
-                      errors.email && touchedFields.has("email") && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
-                      isFieldValid("email") && "border-cyan-500/50"
-                    )}
-                    disabled={isSubmitting}
-                  />
-                </FormField>
-
-                <FormField
-                  label={t.contact.subject}
-                  icon={<FileText className="h-3 w-3" />}
-                  error={touchedFields.has("subject") ? errors.subject : undefined}
-                  success={isFieldValid("subject")}
-                >
-                  <Input
-                    value={formData.subject}
-                    onChange={(e) => handleInputChange("subject", e.target.value)}
-                    onBlur={() => handleBlur("subject")}
-                    placeholder="What's this about?"
-                    className={cn(
-                      "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 text-sm",
-                      errors.subject && touchedFields.has("subject") && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
-                      isFieldValid("subject") && "border-cyan-500/50"
-                    )}
-                    disabled={isSubmitting}
-                  />
-                </FormField>
-
-                <FormField
-                  label={t.contact.message}
-                  icon={<MessageSquare className="h-3 w-3" />}
-                  error={touchedFields.has("message") ? errors.message : undefined}
-                  success={isFieldValid("message")}
-                >
-                  <Textarea
-                    value={formData.message}
-                    onChange={(e) => handleInputChange("message", e.target.value)}
-                    onBlur={() => handleBlur("message")}
-                    placeholder="Tell me more about your project or idea..."
-                    rows={4}
-                    className={cn(
-                      "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 resize-none text-sm",
-                      errors.message && touchedFields.has("message") && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
-                      isFieldValid("message") && "border-cyan-500/50"
-                    )}
-                    disabled={isSubmitting}
-                  />
-                </FormField>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20 h-11 text-sm font-medium transition-all duration-200"
-                  disabled={isSubmitting || progressPercentage < 100}
-                >
-                  <AnimatePresence mode="wait">
-                    {isSubmitting ? (
-                      <motion.div
-                        key="loading"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="flex items-center"
+                    <motion.form
+                      ref={formRef}
+                      onSubmit={handleSubmit}
+                      className="space-y-5"
+                      key={shakeKey}
+                      animate={
+                        shakeKey > 0
+                          ? {
+                              x: [0, -6, 6, -4, 4, -2, 2, 0],
+                            }
+                          : {}
+                      }
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                    >
+                      <FormField
+                        label={t.about.name}
+                        icon={<User className="h-3 w-3" />}
+                        error={touchedFields.has("name") ? errors.name : undefined}
+                        success={isFieldValid("name")}
                       >
-                        <div className="w-4 h-4 mr-2 border-2 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
-                        {t.contact.sending}
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="send"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="flex items-center"
-                      >
-                        {t.contact.submit}
-                        <Send className="ml-2 h-4 w-4" />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </Button>
-              </form>
+                        <Input
+                          ref={setInputRef("name")}
+                          value={formData.name}
+                          onChange={(e) => handleInputChange("name", e.target.value)}
+                          onBlur={() => handleBlur("name")}
+                          placeholder="Your full name"
+                          disabled={formStatus === "submitting"}
+                          className={cn(
+                            "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 text-sm",
+                            errors.name && touchedFields.has("name") && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
+                            isFieldValid("name") && "border-cyan-500/50"
+                          )}
+                        />
+                      </FormField>
 
-              <p className="text-xs text-[#52525B] text-center mt-4">
-                {t.contact.responseTime}
-              </p>
+                      <FormField
+                        label={t.contact.email}
+                        icon={<Mail className="h-3 w-3" />}
+                        error={touchedFields.has("email") ? errors.email : undefined}
+                        success={isFieldValid("email")}
+                      >
+                        <Input
+                          ref={setInputRef("email")}
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => handleInputChange("email", e.target.value)}
+                          onBlur={() => handleBlur("email")}
+                          placeholder="you@email.com"
+                          disabled={formStatus === "submitting"}
+                          className={cn(
+                            "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 text-sm",
+                            errors.email && touchedFields.has("email") && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
+                            isFieldValid("email") && "border-cyan-500/50"
+                          )}
+                        />
+                      </FormField>
+
+                      <FormField
+                        label={t.contact.subject}
+                        icon={<FileText className="h-3 w-3" />}
+                        error={touchedFields.has("subject") ? errors.subject : undefined}
+                        success={isFieldValid("subject")}
+                      >
+                        <Input
+                          ref={setInputRef("subject")}
+                          value={formData.subject}
+                          onChange={(e) => handleInputChange("subject", e.target.value)}
+                          onBlur={() => handleBlur("subject")}
+                          placeholder="What's this about?"
+                          disabled={formStatus === "submitting"}
+                          className={cn(
+                            "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 text-sm",
+                            errors.subject && touchedFields.has("subject") && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
+                            isFieldValid("subject") && "border-cyan-500/50"
+                          )}
+                        />
+                      </FormField>
+
+                      <FormField
+                        label={t.contact.message}
+                        icon={<MessageSquare className="h-3 w-3" />}
+                        error={touchedFields.has("message") ? errors.message : undefined}
+                        success={isFieldValid("message")}
+                      >
+                        <div className="relative">
+                          <Textarea
+                            ref={setInputRef("message")}
+                            value={formData.message}
+                            onChange={(e) => handleInputChange("message", e.target.value)}
+                            onBlur={() => handleBlur("message")}
+                            placeholder="Tell me more about your project or idea..."
+                            rows={4}
+                            disabled={formStatus === "submitting"}
+                            className={cn(
+                              "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 resize-none text-sm pb-6",
+                              errors.message && touchedFields.has("message") && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
+                              isFieldValid("message") && "border-cyan-500/50"
+                            )}
+                          />
+                          <div className="absolute bottom-1.5 right-2 flex items-center gap-2">
+                            <AnimatePresence>
+                              {errors.message && touchedFields.has("message") && (
+                                <motion.span
+                                  initial={{ opacity: 0, x: -4 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  exit={{ opacity: 0, x: -4 }}
+                                  className="text-xs text-red-400"
+                                >
+                                  {errors.message}
+                                </motion.span>
+                              )}
+                            </AnimatePresence>
+                            <CharacterCount current={formData.message.length} max={1000} />
+                          </div>
+                        </div>
+                      </FormField>
+
+                      <SubmitButton
+                        isSubmitting={formStatus === "submitting"}
+                        isDisabled={!canSubmit}
+                        label={t.contact.submit}
+                        sendingLabel={t.contact.sending}
+                        progressPercentage={progressPercentage}
+                      />
+                    </motion.form>
+
+                    <p className="text-xs text-[#52525B] text-center mt-4">
+                      {t.contact.responseTime}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </GlassmorphicCard>
           </motion.div>
         </div>

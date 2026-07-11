@@ -100,6 +100,9 @@ export const translations = {
       infoTitle: "Información de contacto",
       availableFreelance: "Disponible para freelance",
       availableFulltime: "Abierto a tiempo completo",
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
     },
     footer: {
       rights: "Todos los derechos reservados.",
@@ -207,6 +210,9 @@ export const translations = {
       infoTitle: "Contact Information",
       availableFreelance: "Available for freelance work",
       availableFulltime: "Open to full-time opportunities",
+      email: "Email",
+      linkedin: "LinkedIn",
+      github: "GitHub",
     },
     footer: {
       rights: "All rights reserved.",

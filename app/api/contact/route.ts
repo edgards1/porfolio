@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       from: 'Portafolio <onboarding@resend.dev>',
       to: 'edgar_delgado_scott@hotmail.com',
       subject: `Nuevo mensaje de contacto: ${body.subject}`,
-      reply_to: body.email,
+      replyTo: body.email,
       html: ownerNotificationHtml({ name: body.name, email: body.email, subject: body.subject, message: body.message }),
     })
 

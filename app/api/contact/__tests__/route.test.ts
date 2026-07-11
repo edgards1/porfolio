@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { NextRequest } from 'next/server'
 import { POST } from '../route'
 
 const mockSend = vi.hoisted(() => vi.fn().mockResolvedValue({ data: { id: 'mock-email-id' }, error: null }))
@@ -9,10 +10,10 @@ vi.mock('resend', () => ({
   },
 }))
 
-function mockRequest(body: Record<string, unknown>): Request {
+function mockRequest(body: Record<string, unknown>): NextRequest {
   return {
     json: () => Promise.resolve(body),
-  } as unknown as Request
+  } as unknown as NextRequest
 }
 
 describe('POST /api/contact', () => {
@@ -99,7 +100,7 @@ describe('POST /api/contact', () => {
     const ownerCall = mockSend.mock.calls[0][0]
     expect(ownerCall.to).toBe('edgar_delgado_scott@hotmail.com')
     expect(ownerCall.subject).toContain('Job Opportunity')
-    expect(ownerCall.reply_to).toBe('jane@test.com')
+    expect(ownerCall.replyTo).toBe('jane@test.com')
     expect(ownerCall.html).toContain('Jane Smith')
     expect(ownerCall.html).toContain('jane@test.com')
   })
@@ -121,7 +122,7 @@ describe('POST /api/contact', () => {
   it('handles invalid JSON body gracefully', async () => {
     const request = {
       json: () => Promise.reject(new Error('Invalid JSON')),
-    } as unknown as Request
+    } as unknown as NextRequest
 
     const response = await POST(request)
     const body = await response.json()

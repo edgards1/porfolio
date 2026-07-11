@@ -55,3 +55,12 @@ export function validateForm(data: ContactFormData): FormErrors {
 export function isFormValid(errors: FormErrors): boolean {
   return Object.keys(errors).length === 0
 }
+
+const fieldOrder: (keyof ContactFormData)[] = ['name', 'email', 'subject', 'message']
+
+export function getFirstErrorField(errors: FormErrors): keyof ContactFormData | null {
+  for (const field of fieldOrder) {
+    if (errors[field]) return field
+  }
+  return null
+}

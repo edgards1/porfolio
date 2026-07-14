@@ -3,17 +3,17 @@ import { validateField, validateForm, isFormValid } from '../validation'
 
 describe('validateField', () => {
   describe('name', () => {
-    it('returns error when name is empty', () => {
-      expect(validateField('name', '')).toBe('Name is required')
-      expect(validateField('name', '   ')).toBe('Name is required')
+    it('returns REQUIRED when name is empty', () => {
+      expect(validateField('name', '')).toBe('REQUIRED')
+      expect(validateField('name', '   ')).toBe('REQUIRED')
     })
 
-    it('returns error when name is too short', () => {
-      expect(validateField('name', 'A')).toBe('Name must be at least 2 characters')
+    it('returns TOO_SHORT when name is too short', () => {
+      expect(validateField('name', 'A')).toBe('TOO_SHORT')
     })
 
-    it('returns error when name exceeds 50 characters', () => {
-      expect(validateField('name', 'A'.repeat(51))).toBe('Name cannot exceed 50 characters')
+    it('returns TOO_LONG when name exceeds 50 characters', () => {
+      expect(validateField('name', 'A'.repeat(51))).toBe('TOO_LONG')
     })
 
     it('returns undefined for valid name', () => {
@@ -30,16 +30,16 @@ describe('validateField', () => {
   })
 
   describe('email', () => {
-    it('returns error when email is empty', () => {
-      expect(validateField('email', '')).toBe('Email is required')
-      expect(validateField('email', '   ')).toBe('Email is required')
+    it('returns REQUIRED when email is empty', () => {
+      expect(validateField('email', '')).toBe('REQUIRED')
+      expect(validateField('email', '   ')).toBe('REQUIRED')
     })
 
-    it('returns error for invalid email formats', () => {
-      expect(validateField('email', 'notanemail')).toBe('Enter a valid email')
-      expect(validateField('email', 'missing@domain')).toBe('Enter a valid email')
-      expect(validateField('email', '@domain.com')).toBe('Enter a valid email')
-      expect(validateField('email', 'user@.com')).toBe('Enter a valid email')
+    it('returns INVALID_EMAIL for invalid email formats', () => {
+      expect(validateField('email', 'notanemail')).toBe('INVALID_EMAIL')
+      expect(validateField('email', 'missing@domain')).toBe('INVALID_EMAIL')
+      expect(validateField('email', '@domain.com')).toBe('INVALID_EMAIL')
+      expect(validateField('email', 'user@.com')).toBe('INVALID_EMAIL')
     })
 
     it('returns undefined for valid email', () => {
@@ -50,17 +50,17 @@ describe('validateField', () => {
   })
 
   describe('subject', () => {
-    it('returns error when subject is empty', () => {
-      expect(validateField('subject', '')).toBe('Subject is required')
-      expect(validateField('subject', '   ')).toBe('Subject is required')
+    it('returns REQUIRED when subject is empty', () => {
+      expect(validateField('subject', '')).toBe('REQUIRED')
+      expect(validateField('subject', '   ')).toBe('REQUIRED')
     })
 
-    it('returns error when subject is too short', () => {
-      expect(validateField('subject', 'Hi')).toBe('Subject must be at least 5 characters')
+    it('returns TOO_SHORT when subject is too short', () => {
+      expect(validateField('subject', 'Hi')).toBe('TOO_SHORT')
     })
 
-    it('returns error when subject exceeds 100 characters', () => {
-      expect(validateField('subject', 'A'.repeat(101))).toBe('Subject cannot exceed 100 characters')
+    it('returns TOO_LONG when subject exceeds 100 characters', () => {
+      expect(validateField('subject', 'A'.repeat(101))).toBe('TOO_LONG')
     })
 
     it('returns undefined for valid subject', () => {
@@ -69,17 +69,17 @@ describe('validateField', () => {
   })
 
   describe('message', () => {
-    it('returns error when message is empty', () => {
-      expect(validateField('message', '')).toBe('Message is required')
-      expect(validateField('message', '   ')).toBe('Message is required')
+    it('returns REQUIRED when message is empty', () => {
+      expect(validateField('message', '')).toBe('REQUIRED')
+      expect(validateField('message', '   ')).toBe('REQUIRED')
     })
 
-    it('returns error when message is too short', () => {
-      expect(validateField('message', 'Hi there')).toBe('Message must be at least 10 characters')
+    it('returns TOO_SHORT when message is too short', () => {
+      expect(validateField('message', 'Hi there')).toBe('TOO_SHORT')
     })
 
-    it('returns error when message exceeds 1000 characters', () => {
-      expect(validateField('message', 'A'.repeat(1001))).toBe('Message cannot exceed 1000 characters')
+    it('returns TOO_LONG when message exceeds 1000 characters', () => {
+      expect(validateField('message', 'A'.repeat(1001))).toBe('TOO_LONG')
     })
 
     it('returns undefined for valid message', () => {
@@ -127,8 +127,8 @@ describe('validateForm', () => {
       message: 'Hello Edgar, I would like to discuss a potential collaboration opportunity.',
     })
     expect(result.name).toBeUndefined()
-    expect(result.email).toBe('Enter a valid email')
-    expect(result.subject).toBe('Subject must be at least 5 characters')
+    expect(result.email).toBe('INVALID_EMAIL')
+    expect(result.subject).toBe('TOO_SHORT')
     expect(result.message).toBeUndefined()
   })
 })
@@ -139,7 +139,7 @@ describe('isFormValid', () => {
   })
 
   it('returns false when errors object has entries', () => {
-    expect(isFormValid({ name: 'Name is required' })).toBe(false)
-    expect(isFormValid({ name: 'Name is required', email: 'Email is required' })).toBe(false)
+    expect(isFormValid({ name: 'REQUIRED' })).toBe(false)
+    expect(isFormValid({ name: 'REQUIRED', email: 'REQUIRED' })).toBe(false)
   })
 })

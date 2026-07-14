@@ -12,7 +12,8 @@ import { cn } from "@/lib/utils"
 import { GlassmorphicCard } from "@/components/glassmorphic-card"
 import { SectionHeading } from "@/components/section-heading"
 import { useLanguage } from "@/contexts/language-context"
-import { validateField, validateForm, isFormValid, getFirstErrorField } from "@/lib/validation"
+import { validateField, validateForm, isFormValid, getFirstErrorField, type ValidationErrorCode } from "@/lib/validation"
+import type { TranslationKeys } from "@/lib/translations"
 import { CharacterCount } from "@/components/ui/character-count"
 
 interface FormData {
@@ -23,10 +24,10 @@ interface FormData {
 }
 
 interface FormErrors {
-  name?: string
-  email?: string
-  subject?: string
-  message?: string
+  name?: ValidationErrorCode
+  email?: ValidationErrorCode
+  subject?: ValidationErrorCode
+  message?: ValidationErrorCode
 }
 
 type FormStatus = "idle" | "submitting" | "success" | "error"
@@ -82,12 +83,14 @@ function SubmitButton({
   isDisabled,
   label,
   sendingLabel,
+  hintLabel,
   progressPercentage,
 }: {
   isSubmitting: boolean
   isDisabled: boolean
   label: string
   sendingLabel: string
+  hintLabel: string
   progressPercentage: number
 }) {
   return (
@@ -136,7 +139,7 @@ function SubmitButton({
             exit={{ opacity: 0, y: -4 }}
             className="text-xs text-center text-[#52525B]"
           >
-            Complete all fields to send the message
+            {hintLabel}
           </motion.p>
         )}
       </AnimatePresence>
@@ -144,7 +147,7 @@ function SubmitButton({
   )
 }
 
-function SuccessState({ name, onReset }: { name: string; onReset: () => void }) {
+function SuccessState({ name, t, onReset }: { name: string; t: TranslationKeys; onReset: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -167,7 +170,7 @@ function SuccessState({ name, onReset }: { name: string; onReset: () => void }) 
         transition={{ delay: 0.3 }}
         className="text-lg font-semibold text-[#FAFAFA] mb-2"
       >
-        Message sent successfully!
+        {t.contact.successTitle}
       </motion.h3>
 
       <motion.p
@@ -176,7 +179,7 @@ function SuccessState({ name, onReset }: { name: string; onReset: () => void }) 
         transition={{ delay: 0.4 }}
         className="text-sm text-[#A1A1AA] max-w-sm"
       >
-        Thank you, {name}. I will review your message and get back to you within 24 hours.
+        {t.contact.successMessage.replace('{name}', name)}
       </motion.p>
 
       <motion.div
@@ -200,7 +203,7 @@ function SuccessState({ name, onReset }: { name: string; onReset: () => void }) 
         transition={{ delay: 0.7 }}
         className="text-xs text-[#52525B] mt-2"
       >
-        Resetting form...
+        {t.contact.resetting}
       </motion.p>
     </motion.div>
   )
@@ -232,7 +235,32 @@ export function ContactSection() {
     inputRefs.current[field] = el
   }, [])
 
-  const validateFieldFn = useCallback((field: keyof FormData, value: string): string | undefined => {
+  const setFieldError = useCallback((field: keyof FormData, error: ValidationErrorCode | undefined) => {
+    setErrors((prev) => {
+      if (error) return { ...prev, [field]: error }
+      const { [field]: _, ...rest } = prev
+      return rest
+    })
+  }, [])
+
+  const translateFieldError = useCallback((field: keyof FormData, code: ValidationErrorCode): string => {
+    const map: Record<string, string> = {
+      name_REQUIRED: t.contact.validationNameRequired,
+      name_TOO_SHORT: t.contact.validationNameTooShort,
+      name_TOO_LONG: t.contact.validationNameTooLong,
+      email_REQUIRED: t.contact.validationEmailRequired,
+      email_INVALID_EMAIL: t.contact.validationEmailInvalid,
+      subject_REQUIRED: t.contact.validationSubjectRequired,
+      subject_TOO_SHORT: t.contact.validationSubjectTooShort,
+      subject_TOO_LONG: t.contact.validationSubjectTooLong,
+      message_REQUIRED: t.contact.validationMessageRequired,
+      message_TOO_SHORT: t.contact.validationMessageTooShort,
+      message_TOO_LONG: t.contact.validationMessageTooLong,
+    }
+    return map[`${field}_${code}`] || code
+  }, [t])
+
+  const validateFieldFn = useCallback((field: keyof FormData, value: string): ValidationErrorCode | undefined => {
     return validateField(field, value)
   }, [])
 
@@ -245,10 +273,10 @@ export function ContactSection() {
       }
       debounceTimers.current[field] = setTimeout(() => {
         const error = validateFieldFn(field, value)
-        setErrors((prev) => ({ ...prev, [field]: error }))
+        setFieldError(field, error)
       }, 300)
     }
-  }, [touchedFields, validateFieldFn])
+  }, [touchedFields, validateFieldFn, setFieldError])
 
   useEffect(() => {
     return () => {
@@ -261,8 +289,8 @@ export function ContactSection() {
   const handleBlur = useCallback((field: keyof FormData) => {
     setTouchedFields((prev) => new Set([...prev, field]))
     const error = validateFieldFn(field, formData[field])
-    setErrors((prev) => ({ ...prev, [field]: error }))
-  }, [formData, validateFieldFn])
+    setFieldError(field, error)
+  }, [formData, validateFieldFn, setFieldError])
 
   const validateFormFn = useCallback((): boolean => {
     const newErrors = validateForm(formData)
@@ -291,8 +319,8 @@ export function ContactSection() {
     if (!validateFormFn()) {
       setShakeKey((k) => k + 1)
       toast({
-        title: "Form errors",
-        description: "Please fix the errors before submitting.",
+        title: t.contact.toastValidationTitle,
+        description: t.contact.toastValidationDescription,
         variant: "destructive",
       })
       setTimeout(() => focusFirstError(), 100)
@@ -310,22 +338,28 @@ export function ContactSection() {
 
       const data = await response.json()
 
-      if (!response.ok) throw new Error(data.error || "Error sending message")
+      if (!response.ok) throw new Error(data.error || t.contact.apiError)
 
       setFormStatus("success")
       toast({
-        title: "Message sent successfully!",
-        description: data.message || "Thank you for reaching out. I'll respond shortly.",
+        title: t.contact.toastSuccess,
+        description: data.message || t.contact.toastSuccessDescription,
       })
     } catch (error) {
       setFormStatus("error")
       toast({
-        title: "Error sending message",
-        description: error instanceof Error ? error.message : "Unknown error",
+        title: t.contact.toastError,
+        description: error instanceof Error ? error.message : t.contact.toastErrorDescription,
         variant: "destructive",
       })
       setFormStatus("idle")
     }
+  }
+
+  const getFieldError = (field: keyof FormData): string | undefined => {
+    const code = errors[field]
+    if (!code || !touchedFields.has(field)) return undefined
+    return translateFieldError(field, code)
   }
 
   const isFieldValid = (field: keyof FormData): boolean =>
@@ -428,6 +462,7 @@ export function ContactSection() {
                   <SuccessState
                     key="success"
                     name={formData.name}
+                    t={t}
                     onReset={resetForm}
                   />
                 ) : (
@@ -474,7 +509,7 @@ export function ContactSection() {
                       <FormField
                         label={t.about.name}
                         icon={<User className="h-3 w-3" />}
-                        error={touchedFields.has("name") ? errors.name : undefined}
+                        error={getFieldError("name")}
                         success={isFieldValid("name")}
                       >
                         <Input
@@ -482,7 +517,7 @@ export function ContactSection() {
                           value={formData.name}
                           onChange={(e) => handleInputChange("name", e.target.value)}
                           onBlur={() => handleBlur("name")}
-                          placeholder="Your full name"
+                          placeholder={t.contact.placeholderName}
                           disabled={formStatus === "submitting"}
                           className={cn(
                             "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 text-sm",
@@ -495,7 +530,7 @@ export function ContactSection() {
                       <FormField
                         label={t.contact.email}
                         icon={<Mail className="h-3 w-3" />}
-                        error={touchedFields.has("email") ? errors.email : undefined}
+                        error={getFieldError("email")}
                         success={isFieldValid("email")}
                       >
                         <Input
@@ -504,7 +539,7 @@ export function ContactSection() {
                           value={formData.email}
                           onChange={(e) => handleInputChange("email", e.target.value)}
                           onBlur={() => handleBlur("email")}
-                          placeholder="you@email.com"
+                          placeholder={t.contact.placeholderEmail}
                           disabled={formStatus === "submitting"}
                           className={cn(
                             "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 text-sm",
@@ -517,7 +552,7 @@ export function ContactSection() {
                       <FormField
                         label={t.contact.subject}
                         icon={<FileText className="h-3 w-3" />}
-                        error={touchedFields.has("subject") ? errors.subject : undefined}
+                        error={getFieldError("subject")}
                         success={isFieldValid("subject")}
                       >
                         <Input
@@ -525,7 +560,7 @@ export function ContactSection() {
                           value={formData.subject}
                           onChange={(e) => handleInputChange("subject", e.target.value)}
                           onBlur={() => handleBlur("subject")}
-                          placeholder="What's this about?"
+                          placeholder={t.contact.placeholderSubject}
                           disabled={formStatus === "submitting"}
                           className={cn(
                             "bg-[#1f1f23] border-[#27272A] focus:border-cyan-500 focus:ring-cyan-500/20 transition-all duration-200 text-sm",
@@ -538,7 +573,7 @@ export function ContactSection() {
                       <FormField
                         label={t.contact.message}
                         icon={<MessageSquare className="h-3 w-3" />}
-                        error={touchedFields.has("message") ? errors.message : undefined}
+                        error={getFieldError("message")}
                         success={isFieldValid("message")}
                       >
                         <div className="relative">
@@ -547,7 +582,7 @@ export function ContactSection() {
                             value={formData.message}
                             onChange={(e) => handleInputChange("message", e.target.value)}
                             onBlur={() => handleBlur("message")}
-                            placeholder="Tell me more about your project or idea..."
+                            placeholder={t.contact.placeholderMessage}
                             rows={4}
                             disabled={formStatus === "submitting"}
                             className={cn(
@@ -565,7 +600,7 @@ export function ContactSection() {
                                   exit={{ opacity: 0, x: -4 }}
                                   className="text-xs text-red-400"
                                 >
-                                  {errors.message}
+                                  {getFieldError("message")}
                                 </motion.span>
                               )}
                             </AnimatePresence>
@@ -579,6 +614,7 @@ export function ContactSection() {
                         isDisabled={!canSubmit}
                         label={t.contact.submit}
                         sendingLabel={t.contact.sending}
+                        hintLabel={t.contact.completeFields}
                         progressPercentage={progressPercentage}
                       />
                     </motion.form>

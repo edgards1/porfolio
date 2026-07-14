@@ -6,32 +6,38 @@ export interface ContactFormData {
 }
 
 export interface FormErrors {
-  name?: string
-  email?: string
-  subject?: string
-  message?: string
+  name?: ValidationErrorCode
+  email?: ValidationErrorCode
+  subject?: ValidationErrorCode
+  message?: ValidationErrorCode
 }
 
-export function validateField(field: keyof ContactFormData, value: string): string | undefined {
+export type ValidationErrorCode =
+  | 'REQUIRED'
+  | 'TOO_SHORT'
+  | 'TOO_LONG'
+  | 'INVALID_EMAIL'
+
+export function validateField(field: keyof ContactFormData, value: string): ValidationErrorCode | undefined {
   switch (field) {
     case "name":
-      if (!value.trim()) return "Name is required"
-      if (value.trim().length < 2) return "Name must be at least 2 characters"
-      if (value.trim().length > 50) return "Name cannot exceed 50 characters"
+      if (!value.trim()) return 'REQUIRED'
+      if (value.trim().length < 2) return 'TOO_SHORT'
+      if (value.trim().length > 50) return 'TOO_LONG'
       return undefined
     case "email":
-      if (!value.trim()) return "Email is required"
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return "Enter a valid email"
+      if (!value.trim()) return 'REQUIRED'
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'INVALID_EMAIL'
       return undefined
     case "subject":
-      if (!value.trim()) return "Subject is required"
-      if (value.trim().length < 5) return "Subject must be at least 5 characters"
-      if (value.trim().length > 100) return "Subject cannot exceed 100 characters"
+      if (!value.trim()) return 'REQUIRED'
+      if (value.trim().length < 5) return 'TOO_SHORT'
+      if (value.trim().length > 100) return 'TOO_LONG'
       return undefined
     case "message":
-      if (!value.trim()) return "Message is required"
-      if (value.trim().length < 10) return "Message must be at least 10 characters"
-      if (value.trim().length > 1000) return "Message cannot exceed 1000 characters"
+      if (!value.trim()) return 'REQUIRED'
+      if (value.trim().length < 10) return 'TOO_SHORT'
+      if (value.trim().length > 1000) return 'TOO_LONG'
       return undefined
     default:
       return undefined

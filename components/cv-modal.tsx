@@ -51,8 +51,8 @@ export function CvModal({ isOpen, onClose }: ResumeModalProps) {
     try {
       setIsDownloading(true)
       const link = document.createElement("a")
-      link.href = "/documents/Edgar_Eduardo_Delgado_Scott_CV.pdf"
-      link.download = "Edgar_Eduardo_Delgado_Scott_CV.pdf"
+      link.href = "/documents/Edgar-Delgado-CV.pdf"
+      link.download = "Edgar-Delgado-CV.pdf"
       link.target = "_blank"
       document.body.appendChild(link)
       link.click()
@@ -78,7 +78,7 @@ export function CvModal({ isOpen, onClose }: ResumeModalProps) {
   }, [isMobile, onClose, toast])
 
   const handleOpenInNewTab = useCallback(() => {
-    window.open("/documents/Edgar_Eduardo_Delgado_Scott_CV.pdf", "_blank", "noopener,noreferrer")
+    window.open("/documents/Edgar-Delgado-CV.pdf", "_blank", "noopener,noreferrer")
     toast({
       title: "PDF opened",
       description: "CV opened in a new tab.",

@@ -48,7 +48,7 @@ const skillCategories = [
       { name: "PostgreSQL", icon: "/img/postgresql.svg" },
       { name: "MongoDB", icon: "/img/mongo.svg" },
       { name: "Redis", icon: "/img/Redis.svg" },
-      { name: "Claude Code", icon: "/img/ClaudeCode.svg" },
+      { name: "Claude Code", icon: "/img/claude-code.svg" },
       { name: "Postman", icon: "/img/Postman.svg" },
       { name: "Docker", icon: "/img/Docker.svg" },
       { name: "Git", icon: "/img/Git.svg" },

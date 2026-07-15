@@ -18,22 +18,22 @@ import { CvModal } from "@/components/cv-modal"
 import { useLanguage } from "@/contexts/language-context"
 
 const techLogos = [
-  { name: "JS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  { name: "TS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  { name: "Angular", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" },
-  { name: "Next", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-  { name: "NodeJS", icon: "https://www.myqnap.org/wp-content/uploads/nodejs-logo.gif" },
-  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-  { name: "FastAPI", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" },
-  { name: "Django", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
-  { name: "C#", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
-  { name: ".NET", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg" },
-  { name: "SQL Server", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" },
-  { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
-  { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-  { name: "Redis", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" },
-  { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+  { name: "JS", icon: "/img/javascript.svg" },
+  { name: "TS", icon: "/img/typescript.svg" },
+  { name: "React", icon: "/img/react.svg" },
+  { name: "Angular", icon: "/img/angular.svg" },
+  { name: "NodeJS", icon: "/img/nodejs.svg" },
+  { name: "Next", icon: "/img/nextjs.svg" },
+  { name: "Python", icon: "/img/python.svg" },
+  { name: "FastAPI", icon: "/img/FastAPI.svg" },
+  { name: "Django", icon: "/img/django.svg" },
+  { name: "C#", icon: "/img/C-sharp.svg" },
+  { name: ".NET", icon: "/img/dotnet.svg" },
+  { name: "SQL", icon: "/img/sql-server.svg" },
+  { name: "PostgreSQL", icon: "/img/postgresql.svg" },
+  { name: "Git", icon: "/img/Git.svg" },
+  { name: "Docker", icon: "/img/Docker.svg" },
+  { name: "Redis", icon: "/img/Redis.svg" },
 ]
 
 const socialLinks = [

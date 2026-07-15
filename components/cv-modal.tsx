@@ -92,7 +92,7 @@ export function CvModal({ isOpen, onClose }: ResumeModalProps) {
         await navigator.share({
           title: "CV - Edgar Eduardo Delgado Scott",
           text: "Curriculum Vitae de Edgar Eduardo Delgado Scott - Full Stack Developer",
-          url: `${window.location.origin}/documents/Edgar_Eduardo_Delgado_Scott_CV.pdf`,
+          url: `${window.location.origin}/documents/Edgar-Delgado-CV.pdf`,
         })
         toast({ title: "Shared successfully", description: "CV has been shared.", duration: 2000 })
       } catch {
@@ -101,7 +101,7 @@ export function CvModal({ isOpen, onClose }: ResumeModalProps) {
     } else {
       try {
         await navigator.clipboard.writeText(
-          `${window.location.origin}/documents/Edgar_Eduardo_Delgado_Scott_CV.pdf`
+          `${window.location.origin}/documents/Edgar-Delgado-CV.pdf`
         )
         toast({ title: "Link copied", description: "CV link copied to clipboard.", duration: 2000 })
       } catch {
@@ -254,7 +254,7 @@ export function CvModal({ isOpen, onClose }: ResumeModalProps) {
 
                   {!pdfError ? (
                     <iframe
-                      src="/documents/Edgar_Eduardo_Delgado_Scott_CV.pdf#toolbar=1&navpanes=1&scrollbar=1&view=FitH"
+                      src="/documents/Edgar-Delgado-CV.pdf#toolbar=1&navpanes=1&scrollbar=1&view=FitH"
                       className="w-full h-full border-0 transition-opacity duration-500"
                       title="Edgar Delgado Resume"
                       onLoad={() => setIsLoading(false)}

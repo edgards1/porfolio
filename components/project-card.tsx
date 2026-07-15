@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Github, Star, ExternalLink } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -48,11 +49,13 @@ export function ProjectCard({
         <div className="relative h-full flex flex-col">
           <div className="relative overflow-hidden h-48 bg-[#1f1f23]">
             {!imageError ? (
-              <img
+              <Image
                 src={image}
                 alt={title}
-                className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? "scale-110" : "scale-100"}`}
+                fill
+                className={`object-cover transition-transform duration-700 ${isHovered ? "scale-110" : "scale-100"}`}
                 onError={() => setImageError(true)}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
@@ -104,11 +107,11 @@ export function ProjectCard({
               </div>
             </div>
 
-            <div className="flex justify-between items-center pt-4 border-t border-[#27272A]">
+            <div className="flex justify-end items-center pt-4 border-t border-[#27272A]">
               <Button
-                variant="ghost"
+                // variant="ghost"
                 size="sm"
-                className="text-[#A1A1AA] hover:text-[#FAFAFA] hover:bg-[#27272A]"
+                className="bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20"
                 asChild
               >
                 <Link href={repoUrl} target="_blank" rel="noopener noreferrer">
@@ -116,19 +119,6 @@ export function ProjectCard({
                   <span className="text-xs">Code</span>
                 </Link>
               </Button>
-
-              {demoUrl && demoUrl !== repoUrl && (
-                <Button
-                  size="sm"
-                  className="bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/20"
-                  asChild
-                >
-                  <Link href={demoUrl} target="_blank" rel="noopener noreferrer">
-                    <span className="text-xs">Demo</span>
-                    <ExternalLink className="ml-1.5 h-3.5 w-3.5" />
-                  </Link>
-                </Button>
-              )}
             </div>
           </div>
         </div>

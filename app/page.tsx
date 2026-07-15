@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { ArrowRight, Github, Linkedin, Mail, Terminal } from "lucide-react"
@@ -220,11 +221,14 @@ export default function Portfolio() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <div className="aspect-square rounded-lg overflow-hidden border border-[#27272A]">
-                <img
+              <div className="aspect-square rounded-lg overflow-hidden border border-[#27272A] relative">
+                <Image
                   src="/img/perfil.jpg"
                   alt="Edgar Delgado Scott"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 600px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#09090B]/80 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 w-full p-5">

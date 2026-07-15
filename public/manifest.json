@@ -1,0 +1,9 @@
+{
+  "name": "Edgar Delgado | FullStack Developer",
+  "short_name": "Edgar Delgado",
+  "description": "FullStack Developer Portfolio — software engineer specializing in web development, architecture, and full-stack solutions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090B",
+  "theme_color": "#0AE5FF"
+}

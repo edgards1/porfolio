@@ -223,7 +223,7 @@ export default function Portfolio() {
             >
               <div className="aspect-square rounded-lg overflow-hidden border border-[#27272A] relative">
                 <Image
-                  src="/img/perfil.jpg"
+                  src="/img/foto-perfil.png"
                   alt="Edgar Delgado Scott"
                   fill
                   className="object-cover"

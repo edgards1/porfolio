@@ -60,8 +60,9 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
+    icon: '/img/logo-favicon.png',
+    shortcut: '/img/logo-favicon.png',
+    apple: '/img/logo-favicon.png',
   },
   manifest: '/manifest.json',
 }

@@ -29,7 +29,7 @@ const techLogos = [
   { name: "Django", icon: "/img/django.svg" },
   { name: "C#", icon: "/img/C-sharp.svg" },
   { name: ".NET", icon: "/img/dotnet.svg" },
-  { name: "SQL", icon: "/img/sql-server.svg" },
+  { name: "SQL Server", icon: "/img/sql-server.svg" },
   { name: "PostgreSQL", icon: "/img/postgresql.svg" },
   { name: "Git", icon: "/img/Git.svg" },
   { name: "Docker", icon: "/img/Docker.svg" },

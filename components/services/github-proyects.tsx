@@ -68,22 +68,14 @@ const repoEnhancements: Record<string, Partial<ProjectData>> = {
 
 async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
   try {
-    const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=20`)
+    const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100&direction=desc`)
     
     if (!response.ok) {
       throw new Error(`GitHub API error: ${response.status}`)
     }
     
     const repos: GitHubRepo[] = await response.json()
-    
-    // Filtrar repositorios relevantes (excluir forks, repos privados, etc.)
-    return repos.filter(repo => 
-      !repo.name.includes('fork') && 
-      repo.description && 
-      !repo.name.includes('config') &&
-      !repo.name.includes('dotfiles') &&
-      repo.stargazers_count >= 0 // Mostrar todos por ahora
-    )
+    return repos
   } catch (error) {
     console.error('Error fetching GitHub repos:', error)
     return []
@@ -181,21 +173,21 @@ export function GitHubProjects() {
       try {
         setLoading(true)
         setError(null)
-        
-        const repos = await fetchGitHubRepos()
-        
-        if (repos.length === 0) {
-          throw new Error("No se encontraron repositorios públicos")
+
+        const allRepos = await fetchGitHubRepos()
+
+        const starred = allRepos
+          .filter((r) => r.stargazers_count > 0)
+          .sort((a, b) => b.stargazers_count - a.stargazers_count)
+          .slice(0, 6)
+
+        if (starred.length === 0) {
+          throw new Error("No se encontraron repositorios con estrellas")
         }
-        
-        const transformedProjects = repos
-          .slice(0, 6) // Mostrar solo los 6 más recientes
-          .map(transformRepoToProject)
-        
-        setProjects(transformedProjects)
+
+        setProjects(starred.map(transformRepoToProject))
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error al cargar proyectos")
-        // Cargar proyectos de respaldo
         setProjects(getFallbackProjects())
       } finally {
         setLoading(false)
@@ -251,38 +243,39 @@ export function GitHubProjects() {
   )
 }
 
-// Proyectos de respaldo en caso de error con la API
+const fallbackData: Record<string, ProjectData> = {
+  portfolio: {
+    title: "Portfolio Personal",
+    description: "Portfolio personal desarrollado con Next.js, TypeScript y Tailwind CSS.",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    image: "/img/placeholder.svg?height=400&width=600",
+    demoUrl: "https://edgar-portfolio.vercel.app",
+    repoUrl: "https://github.com/edgards1/portfolio",
+    stars: 5,
+    language: "TypeScript"
+  },
+  "ecommerce-app": {
+    title: "E-commerce Application",
+    description: "Aplicación de comercio electrónico con React, Node.js y MongoDB.",
+    tags: ["React", "Node.js", "MongoDB"],
+    image: "/img/placeholder.svg?height=400&width=600",
+    demoUrl: "https://example.com",
+    repoUrl: "https://github.com/edgards1/ecommerce-app",
+    stars: 3,
+    language: "TypeScript"
+  },
+  "task-manager": {
+    title: "Gestor de Tareas",
+    description: "Aplicación para gestión de tareas con Angular y .NET Core.",
+    tags: ["Angular", ".NET Core", "SQL Server"],
+    image: "/img/placeholder.svg?height=400&width=600",
+    demoUrl: "https://example.com",
+    repoUrl: "https://github.com/edgards1/task-manager",
+    stars: 2,
+    language: "C#"
+  },
+}
+
 function getFallbackProjects(): ProjectData[] {
-  return [
-    {
-      title: "Portfolio Personal",
-      description: "Portfolio personal desarrollado con Next.js, TypeScript y Tailwind CSS.",
-      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-      image: "/img/placeholder.svg?height=400&width=600",
-      demoUrl: "https://edgar-portfolio.vercel.app",
-      repoUrl: "https://github.com/edgards1/portfolio",
-      stars: 0,
-      language: "TypeScript"
-    },
-    {
-      title: "Plataforma Web Empresarial",
-      description: "Desarrollo de APIs con Django y diseño de base de datos para plataforma web empresarial.",
-      tags: ["Django", "Python", "SQL", "Auth0", "UML"],
-      image: "/img/placeholder.svg?height=400&width=600",
-      demoUrl: "https://example.com",
-      repoUrl: "https://github.com/edgards1",
-      stars: 0,
-      language: "Python"
-    },
-    {
-      title: "Interfaces Web Dinámicas",
-      description: "Desarrollo de interfaces dinámicas con React y Angular, integración de APIs y optimización UX.",
-      tags: ["React", "Angular", "JavaScript", "Figma", "WCAG"],
-      image: "/img/placeholder.svg?height=400&width=600",
-      demoUrl: "https://example.com",
-      repoUrl: "https://github.com/edgards1",
-      stars: 0,
-      language: "JavaScript"
-    }
-  ]
+  return Object.values(fallbackData)
 }

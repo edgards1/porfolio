@@ -442,10 +442,6 @@ export function ContactSection() {
                   <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                     <span className="text-xs font-mono text-green-400">{t.contact.availableFreelance}</span>
                 </div>
-                <div className="flex items-center gap-2 p-3 rounded bg-cyan-500/5 border border-cyan-500/10">
-                  <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
-                    <span className="text-xs font-mono text-cyan-400">{t.contact.availableFulltime}</span>
-                </div>
               </div>
             </GlassmorphicCard>
           </motion.div>
